@@ -78,7 +78,7 @@ Set any of these custom properties on an ancestor. The fallbacks are the flat Fi
 ```bash
 bun install
 cp .env.example .env    # GEOCODER_URL + GEOCODER_INTERNAL_KEY for the demo proxy
-bun run dev             # demo page on :7013, with simulated down / slow / empty / out-of-order modes
+bun run dev             # demo page on :7014, with simulated down / slow / empty / out-of-order modes
 bun run check
 bun test
 bun run package         # rebuilds dist/, which is committed

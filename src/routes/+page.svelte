@@ -1,5 +1,5 @@
 <script lang="ts">
-	// Demo and manual test bench for the package (not packaged). `bun run dev` → :7013.
+	// Demo and manual test bench for the package (not packaged). `bun run dev` → :7014.
 	import {
 		GeocoderError,
 		GeocoderSearch,

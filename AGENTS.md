@@ -25,5 +25,5 @@ ANTS, Shifter, Thematrix, public client sites). Workspace-wide rules live in
 
 ## Ports
 
-Demo dev server: 7013 (`bun run dev`), next in the FindNearest 7010 block. Never switch it; if
+Demo dev server: 7014 (`bun run dev`) in the FindNearest 7010 block (7013 is the client template). Never switch it; if
 it's busy, kill the existing process.

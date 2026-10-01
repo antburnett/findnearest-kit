@@ -3,7 +3,7 @@
  *
  * The component never knows a URL or a key. Each app passes a SearchFn, normally built here
  * against its own same-origin proxy (the proxy adds the geocoder key server side), or wraps one
- * to add its own lookups (ANTS answers H3 cell indexes itself before falling through to this).
+ * to add its own lookups (e.g. answer an app-specific id before falling through to this).
  */
 /** A failed search the component can put into words. `status` is the HTTP status, 0 if none. */
 export class GeocoderError extends Error {

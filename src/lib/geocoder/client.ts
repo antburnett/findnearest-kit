@@ -3,7 +3,7 @@
  *
  * The component never knows a URL or a key. Each app passes a SearchFn, normally built here
  * against its own same-origin proxy (the proxy adds the geocoder key server side), or wraps one
- * to add its own lookups (ANTS answers H3 cell indexes itself before falling through to this).
+ * to add its own lookups (e.g. answer an app-specific id before falling through to this).
  */
 
 /** Where a result came from, as the geocoder reports it. Apps may add their own (e.g. 'h3'). */
@@ -57,7 +57,7 @@ export class GeocoderError extends Error {
 }
 
 export interface GeocoderSearchConfig {
-	/** Search URL, e.g. '/geocoder/search' (admin proxy) or '/api/v1/geocode' (ANTS API proxy) */
+	/** Search URL on the app's own proxy, e.g. '/geocoder/search' or '/api/v1/geocode' */
 	endpoint: string;
 	/** 'AU' or 'NZ'; omitted searches both */
 	country?: 'AU' | 'NZ';

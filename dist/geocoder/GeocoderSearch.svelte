@@ -7,11 +7,10 @@
 	 * onSelect info says whether the pick is a spot worth a marker (address, place, point,
 	 * location) or an area the map should only move to (a town).
 	 *
-	 * Behaviour carried over from ANTS Views.svelte: debounce, bias to the map centre, a slow
-	 * notice for the geocoder's cold street path, a hard timeout, and stale responses dropped
-	 * (a slow earlier search can never overwrite a newer one). Added: every failure and every
-	 * empty result is said out loud, Enter never submits a surrounding form, and focusing a
-	 * pre-filled box searches what is in it.
+	 * Behaviour: debounce, bias to the map centre, a slow notice for the geocoder's cold street
+	 * path, a hard timeout, and stale responses dropped (a slow earlier search can never
+	 * overwrite a newer one). Every failure and every empty result is said out loud, Enter
+	 * never submits a surrounding form, and focusing a pre-filled box searches what is in it.
 	 */
 	import {
 		GeocoderError,
@@ -323,8 +322,8 @@
 </div>
 
 <style>
-	/* Theme through --fnk-* custom properties on any ancestor; the fallbacks are the flat
-	   FindNearest "Option A" light values. */
+	/* Theme through --fnk-* custom properties on any ancestor; the fallbacks are flat
+	   light-theme values. */
 	.fnk-geocoder {
 		--_bg: var(--fnk-bg, #fff);
 		--_fg: var(--fnk-fg, #0f172a);

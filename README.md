@@ -1,8 +1,8 @@
 # findnearest-kit
 
 Shared FindNearest UI components for Svelte 5 apps. First component: **`GeocoderSearch`**, the
-place search box for the FindNearest geocoder, used by FindNearest Admin, ANTS, Shifter,
-Thematrix and the public client sites instead of each keeping its own copy.
+place search box for the FindNearest geocoder, shared by every app that searches it instead
+of each keeping its own copy.
 
 ## Install
 
@@ -42,7 +42,7 @@ Requires `svelte` 5.20 or later. Upgrading means bumping the tag.
 
 | Prop | Default | |
 |---|---|---|
-| `search` | required | A `SearchFn`, normally `geocoderSearch({ endpoint })`. Wrap it to add your own lookups (ANTS answers H3 cell ids itself). |
+| `search` | required | A `SearchFn`, normally `geocoderSearch({ endpoint })`. Wrap it to add your own lookups (e.g. answer an app-specific id before falling through to the geocoder). |
 | `onSelect` | required | `(result, { pin, kind })`. `pin` is false for towns (an area: move the map only) and true for addresses, places, points and environment locations. |
 | `value` | `''` | Box text. Pass one-way to pre-fill (no search until the box is focused) or `bind:value`. |
 | `bias` | none | `() => ({ lat, lon })`, read at search time, usually the map centre. |
@@ -57,8 +57,8 @@ Requires `svelte` 5.20 or later. Upgrading means bumping the tag.
 
 - Debounced search, biased to `bias()`; a newer query always wins (older in-flight requests are
   aborted, and a late response is dropped).
-- Every state is shown: searching, still searching, nothing found (with a hint for ranges like
-  "68-70 Elbow Street", which the geocoder doesn't match yet), and errors (geocoder unavailable,
+- Every state is shown: searching, still searching, nothing found (suggesting a single street
+  number when a range like "12-14" finds nothing), and errors (geocoder unavailable,
   key rejected, timed out, unreachable).
 - Keyboard: ↑/↓ to move, Enter to pick, Escape to close then clear. Enter never submits a
   surrounding form.
@@ -66,8 +66,8 @@ Requires `svelte` 5.20 or later. Upgrading means bumping the tag.
 
 ### Theming
 
-Set any of these custom properties on an ancestor. The fallbacks are the flat FindNearest
-"Option A" light values, so map them to your own tokens for dark mode.
+Set any of these custom properties on an ancestor. The fallbacks are flat light-theme
+values, so map them to your own tokens for dark mode.
 
 `--fnk-bg`, `--fnk-fg`, `--fnk-muted`, `--fnk-border`, `--fnk-divider`, `--fnk-hover`,
 `--fnk-accent`, `--fnk-accent-soft`, `--fnk-chip-bg`, `--fnk-error`, `--fnk-radius`,

@@ -6,11 +6,10 @@
      * onSelect info says whether the pick is a spot worth a marker (address, place, point,
      * location) or an area the map should only move to (a town).
      *
-     * Behaviour carried over from ANTS Views.svelte: debounce, bias to the map centre, a slow
-     * notice for the geocoder's cold street path, a hard timeout, and stale responses dropped
-     * (a slow earlier search can never overwrite a newer one). Added: every failure and every
-     * empty result is said out loud, Enter never submits a surrounding form, and focusing a
-     * pre-filled box searches what is in it.
+     * Behaviour: debounce, bias to the map centre, a slow notice for the geocoder's cold street
+     * path, a hard timeout, and stale responses dropped (a slow earlier search can never
+     * overwrite a newer one). Every failure and every empty result is said out loud, Enter
+     * never submits a surrounding form, and focusing a pre-filled box searches what is in it.
      */
 import { type GeocoderResult, type ResultKind, type SearchFn } from './client.js';
 interface Props {

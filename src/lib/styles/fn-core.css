@@ -1,0 +1,2889 @@
+/* ==========================================================================
+   findnearest-kit base CSS: tokens, dark mode, base element styles, prose,
+   fn-* utilities and components. No CSS framework.
+   Import order: fn-core.css, fn-late.css, fn-last.css (or fn.css for all three);
+   an app's own global rules go between them as its cascade needs.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. DESIGN TOKENS
+   ========================================================================== */
+
+:root {
+  /* Primary = interactive accent (blue). Shared with SXC / Slotterz. */
+  --fn-color-primary-50: #eff6ff;
+  --fn-color-primary-100: #dbeafe;
+  --fn-color-primary-200: #bfdbfe;
+  --fn-color-primary-300: #93c5fd;
+  --fn-color-primary-400: #60a5fa;
+  --fn-color-primary-500: #3b82f6;
+  --fn-color-primary-600: #2563eb;
+  --fn-color-primary-700: #1d4ed8;
+  --fn-color-primary-800: #1e40af;
+  --fn-color-primary-900: #1e3a8a;
+  --fn-color-primary-950: #172554;
+
+  /* Brand = FindNearest crimson. Header only; never on general controls (destructive actions use error-*). */
+  --fn-color-brand-50: oklch(88.86% 0.05 4.44deg);
+  --fn-color-brand-100: oklch(80.66% 0.09 5.94deg);
+  --fn-color-brand-300: oklch(65.86% 0.17 10.24deg);
+  --fn-color-brand-500: oklch(55.71% 0.21 19.55deg);
+  --fn-color-brand-600: oklch(50.91% 0.2 19.59deg);
+  --fn-color-brand-700: oklch(46.18% 0.18 19.26deg);
+  --fn-color-brand-900: oklch(36.08% 0.14 18.61deg);
+
+  /* --- Secondary (Blue) --- */
+  --fn-color-secondary-50: oklch(92.56% 0.03 231.59deg);
+  --fn-color-secondary-100: oklch(87.15% 0.05 232.35deg);
+  --fn-color-secondary-200: oklch(80.28% 0.07 233.81deg);
+  --fn-color-secondary-300: oklch(73.41% 0.08 236.02deg);
+  --fn-color-secondary-400: oklch(66.54% 0.09 237.84deg);
+  --fn-color-secondary-500: oklch(59.26% 0.09 239.95deg);
+  --fn-color-secondary-600: oklch(53.59% 0.09 240.52deg);
+  --fn-color-secondary-700: oklch(47.84% 0.08 241.09deg);
+  --fn-color-secondary-800: oklch(42.16% 0.07 241.52deg);
+  --fn-color-secondary-900: oklch(36.55% 0.06 241.41deg);
+  --fn-color-secondary-950: oklch(30.55% 0.05 241.83deg);
+
+  /* --- Tertiary (Violet) --- */
+  --fn-color-tertiary-50: oklch(93.25% 0.03 299.89deg);
+  --fn-color-tertiary-100: oklch(86.87% 0.06 300.66deg);
+  --fn-color-tertiary-200: oklch(79.61% 0.1 300.44deg);
+  --fn-color-tertiary-300: oklch(72.66% 0.14 300.53deg);
+  --fn-color-tertiary-400: oklch(65.85% 0.17 300.52deg);
+  --fn-color-tertiary-500: oklch(58.57% 0.19 300.67deg);
+  --fn-color-tertiary-600: oklch(53.17% 0.18 301.05deg);
+  --fn-color-tertiary-700: oklch(47.48% 0.16 300.87deg);
+  --fn-color-tertiary-800: oklch(41.68% 0.14 301.09deg);
+  --fn-color-tertiary-900: oklch(36.16% 0.12 300.82deg);
+  --fn-color-tertiary-950: oklch(30.13% 0.1 301.11deg);
+
+  /* --- Success (Green) --- */
+  --fn-color-success-50: oklch(93.16% 0.04 156.74deg);
+  --fn-color-success-100: oklch(86.74% 0.08 157.47deg);
+  --fn-color-success-200: oklch(79.67% 0.12 157.26deg);
+  --fn-color-success-300: oklch(72.93% 0.15 157.39deg);
+  --fn-color-success-400: oklch(66.61% 0.18 157.82deg);
+  --fn-color-success-500: oklch(60.33% 0.19 158.36deg);
+  --fn-color-success-600: oklch(54.69% 0.17 158.48deg);
+  --fn-color-success-700: oklch(48.85% 0.15 158.72deg);
+  --fn-color-success-800: oklch(43.08% 0.13 158.66deg);
+  --fn-color-success-900: oklch(37.4% 0.11 158.54deg);
+  --fn-color-success-950: oklch(31.28% 0.09 158.82deg);
+
+  /* --- Warning (Amber) --- */
+  --fn-color-warning-50: oklch(94.38% 0.05 90.92deg);
+  --fn-color-warning-100: oklch(88.42% 0.1 87.87deg);
+  --fn-color-warning-200: oklch(82.58% 0.14 85.49deg);
+  --fn-color-warning-300: oklch(77.04% 0.17 82.99deg);
+  --fn-color-warning-400: oklch(71.52% 0.18 74.38deg);
+  --fn-color-warning-500: oklch(66.08% 0.17 62.98deg);
+  --fn-color-warning-600: oklch(60.04% 0.16 55.89deg);
+  --fn-color-warning-700: oklch(54.17% 0.15 50.36deg);
+  --fn-color-warning-800: oklch(47.96% 0.13 46.93deg);
+  --fn-color-warning-900: oklch(41.95% 0.11 44.01deg);
+  --fn-color-warning-950: oklch(35.48% 0.09 42.54deg);
+
+  /* --- Error (Red) --- */
+  --fn-color-error-50: oklch(90.49% 0.04 11.92deg);
+  --fn-color-error-100: oklch(82.57% 0.08 13.45deg);
+  --fn-color-error-200: oklch(74.48% 0.13 14.82deg);
+  --fn-color-error-300: oklch(67.18% 0.17 16.54deg);
+  --fn-color-error-400: oklch(60.59% 0.2 18.64deg);
+  --fn-color-error-500: oklch(55.15% 0.21 22.06deg);
+  --fn-color-error-600: oklch(50.03% 0.2 22.95deg);
+  --fn-color-error-700: oklch(45.32% 0.18 23.26deg);
+  --fn-color-error-800: oklch(40.11% 0.15 23.53deg);
+  --fn-color-error-900: oklch(35.03% 0.13 23.36deg);
+  --fn-color-error-950: oklch(29.56% 0.11 23.49deg);
+
+  /* --- Surface (Neutral) --- */
+  --fn-color-surface-50: #f8fafc;
+  --fn-color-surface-100: #f1f5f9;
+  --fn-color-surface-200: #e2e8f0;
+  --fn-color-surface-300: #cbd5e1;
+  --fn-color-surface-400: #94a3b8;
+  --fn-color-surface-500: #64748b;
+  --fn-color-surface-600: #475569;
+  --fn-color-surface-700: #334155;
+  --fn-color-surface-800: #1e293b;
+  --fn-color-surface-900: #0f172a;
+  --fn-color-surface-950: #020617;
+
+  /* --- Semantic Tokens (Light Mode) --- */
+  --fn-color-body: var(--fn-color-surface-950);
+  --fn-color-body-muted: var(--fn-color-surface-600);
+  --fn-color-body-faint: var(--fn-color-surface-400);
+  --fn-color-bg-page: #ffffff; /* cards, panels, inputs */
+  --fn-color-bg-surface: var(--fn-color-surface-50); /* the page behind them */
+  --fn-color-bg-muted: var(--fn-color-surface-100);
+  --fn-color-bg-accent: var(--fn-color-surface-200);
+  --fn-color-bg-elevated: #ffffff;
+  --fn-color-bg-overlay: #ffffff;
+  --fn-color-bg-inverse: var(--fn-color-surface-900); /* dark chip with on-solid text */
+  --fn-color-border: var(--fn-color-surface-200);
+  --fn-color-border-strong: var(--fn-color-surface-300);
+  --fn-color-border-focus: var(--fn-color-primary-600);
+  --fn-color-divide: var(--fn-color-surface-100);
+  --fn-color-link: var(--fn-color-primary-600);
+  --fn-color-link-strong: var(--fn-color-primary-700);
+  --fn-color-on-solid: #ffffff; /* text on a solid hue or bg-inverse */
+
+  /* --- Tints: pastel badge / callout = tint bg + tint border + tint text --- */
+  --fn-tint-primary-bg: var(--fn-color-primary-100);
+  --fn-tint-primary-border: var(--fn-color-primary-200);
+  --fn-tint-primary-text: var(--fn-color-primary-700);
+  --fn-tint-success-bg: var(--fn-color-success-100);
+  --fn-tint-success-border: var(--fn-color-success-200);
+  --fn-tint-success-text: var(--fn-color-success-700);
+  --fn-tint-warning-bg: var(--fn-color-warning-100);
+  --fn-tint-warning-border: var(--fn-color-warning-200);
+  --fn-tint-warning-text: var(--fn-color-warning-700);
+  --fn-tint-error-bg: var(--fn-color-error-100);
+  --fn-tint-error-border: var(--fn-color-error-200);
+  --fn-tint-error-text: var(--fn-color-error-700);
+  --fn-tint-tertiary-bg: var(--fn-color-tertiary-100);
+  --fn-tint-tertiary-border: var(--fn-color-tertiary-200);
+  --fn-tint-tertiary-text: var(--fn-color-tertiary-700);
+  --fn-tint-orange-bg: #ffedd5;
+  --fn-tint-orange-border: #fed7aa;
+  --fn-tint-orange-text: #c2410c;
+  --fn-tint-fuchsia-bg: #fae8ff;
+  --fn-tint-fuchsia-border: #f5d0fe;
+  --fn-tint-fuchsia-text: #a21caf;
+  --fn-tint-teal-bg: #ccfbf1;
+  --fn-tint-teal-border: #99f6e4;
+  --fn-tint-teal-text: #0f766e;
+
+  /* --- Elevation, motion, controls --- */
+  --fn-shadow-xs: 0 1px 2px rgb(0 0 0 / 0.05);
+  --fn-shadow-sm: 0 1px 3px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --fn-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --fn-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --fn-ring-primary: 0 0 0 3px oklch(from var(--fn-color-primary-500) l c h / 0.25);
+  --fn-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --fn-shell-max-width: 90rem;
+  --fn-control-height: 2rem; /* 32px */
+  --fn-control-height-sm: 1.75rem; /* 28px */
+  --fn-control-height-lg: 2.5rem; /* 40px */
+
+  /* --- Typography --- */
+  --fn-font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --fn-font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+
+  /* --- Radius --- */
+  --fn-radius-sm: 3px;
+  --fn-radius: 4px;
+  --fn-radius-md: 6px;
+  --fn-radius-lg: 6px;
+  --fn-radius-xl: 8px;
+  --fn-radius-2xl: 8px;
+  --fn-radius-full: 9999px;
+}
+
+/* ==========================================================================
+   2. DARK MODE OVERRIDES
+   ========================================================================== */
+
+:where([data-mode='dark'], [data-mode='dark'] *) {
+  --fn-color-body: var(--fn-color-surface-50);
+  --fn-color-body-muted: var(--fn-color-surface-400);
+  --fn-color-body-faint: var(--fn-color-surface-500);
+  --fn-color-bg-page: var(--fn-color-surface-900);
+  --fn-color-bg-surface: var(--fn-color-surface-950);
+  --fn-color-bg-muted: var(--fn-color-surface-800);
+  --fn-color-bg-accent: var(--fn-color-surface-700);
+  --fn-color-bg-elevated: var(--fn-color-surface-900);
+  --fn-color-bg-overlay: var(--fn-color-surface-900);
+  --fn-color-bg-inverse: var(--fn-color-surface-600);
+  --fn-color-border: var(--fn-color-surface-700);
+  --fn-color-border-strong: var(--fn-color-surface-600);
+  --fn-color-border-focus: var(--fn-color-primary-500);
+  --fn-color-divide: var(--fn-color-surface-800);
+  --fn-color-link: var(--fn-color-primary-400);
+  --fn-color-link-strong: var(--fn-color-primary-300);
+  --fn-tint-primary-bg: color-mix(in oklch, var(--fn-color-primary-500) 15%, transparent);
+  --fn-tint-primary-border: color-mix(in oklch, var(--fn-color-primary-500) 40%, transparent);
+  --fn-tint-primary-text: var(--fn-color-primary-300);
+  --fn-tint-success-bg: color-mix(in oklch, var(--fn-color-success-500) 15%, transparent);
+  --fn-tint-success-border: color-mix(in oklch, var(--fn-color-success-500) 40%, transparent);
+  --fn-tint-success-text: var(--fn-color-success-300);
+  --fn-tint-warning-bg: color-mix(in oklch, var(--fn-color-warning-500) 15%, transparent);
+  --fn-tint-warning-border: color-mix(in oklch, var(--fn-color-warning-500) 40%, transparent);
+  --fn-tint-warning-text: var(--fn-color-warning-300);
+  --fn-tint-error-bg: color-mix(in oklch, var(--fn-color-error-500) 15%, transparent);
+  --fn-tint-error-border: color-mix(in oklch, var(--fn-color-error-500) 40%, transparent);
+  --fn-tint-error-text: var(--fn-color-error-300);
+  --fn-tint-tertiary-bg: color-mix(in oklch, var(--fn-color-tertiary-500) 15%, transparent);
+  --fn-tint-tertiary-border: color-mix(in oklch, var(--fn-color-tertiary-500) 40%, transparent);
+  --fn-tint-tertiary-text: var(--fn-color-tertiary-300);
+  --fn-tint-orange-bg: color-mix(in oklch, #f97316 15%, transparent);
+  --fn-tint-orange-border: color-mix(in oklch, #f97316 40%, transparent);
+  --fn-tint-orange-text: #fdba74;
+  --fn-tint-fuchsia-bg: color-mix(in oklch, #d946ef 15%, transparent);
+  --fn-tint-fuchsia-border: color-mix(in oklch, #d946ef 40%, transparent);
+  --fn-tint-fuchsia-text: #f0abfc;
+  --fn-tint-teal-bg: color-mix(in oklch, #14b8a6 15%, transparent);
+  --fn-tint-teal-border: color-mix(in oklch, #14b8a6 40%, transparent);
+  --fn-tint-teal-text: #5eead4;
+  --fn-shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+  --fn-shadow-sm: 0 1px 3px rgb(0 0 0 / 0.5);
+  --fn-shadow-md: 0 4px 8px rgb(0 0 0 / 0.5);
+  --fn-shadow-lg: 0 10px 20px rgb(0 0 0 / 0.55);
+}
+
+/* ==========================================================================
+   3. BASE STYLES
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  font-family: var(--fn-font-family);
+  line-height: 1.5;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--fn-color-body);
+  background-color: var(--fn-color-bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The UA sheet indents every <dd> 40px; definition lists here stack label over value, so the
+   indent only pushed values off the label's line (and off a phone screen). */
+dd {
+  margin-inline-start: 0;
+}
+
+/* --- Form Element Resets --- */
+
+input[type='text'],
+input[type='email'],
+input[type='url'],
+input[type='password'],
+input[type='number'],
+input[type='date'],
+input[type='datetime-local'],
+input[type='month'],
+input[type='search'],
+input[type='tel'],
+input[type='time'],
+input[type='week'],
+textarea,
+select {
+  appearance: none;
+  border: 1px solid var(--fn-color-border-strong);
+  border-radius: var(--fn-radius);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  background-color: var(--fn-color-bg-page);
+  color: var(--fn-color-body);
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='password']:focus,
+input[type='number']:focus,
+input[type='date']:focus,
+input[type='datetime-local']:focus,
+input[type='month']:focus,
+input[type='search']:focus,
+input[type='tel']:focus,
+input[type='time']:focus,
+input[type='week']:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--fn-color-primary-500);
+  outline-offset: -1px;
+  border-color: var(--fn-color-primary-500);
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
+  padding-right: 2.25rem;
+}
+
+input[type='checkbox'] {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--fn-color-border-strong);
+  border-radius: var(--fn-radius-sm);
+  background-color: var(--fn-color-bg-page);
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+input[type='checkbox']:checked {
+  background-color: var(--fn-color-primary-500);
+  border-color: var(--fn-color-primary-500);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+input[type='checkbox']:focus {
+  outline: 2px solid var(--fn-color-primary-500);
+  outline-offset: 2px;
+}
+
+input[type='radio'] {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--fn-color-border-strong);
+  border-radius: 50%;
+  background-color: var(--fn-color-bg-page);
+  cursor: pointer;
+}
+
+input[type='radio']:checked {
+  background-color: var(--fn-color-primary-500);
+  border-color: var(--fn-color-primary-500);
+  box-shadow: inset 0 0 0 3px var(--fn-color-bg-page);
+}
+
+input[type='radio']:focus {
+  outline: 2px solid var(--fn-color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Disabled form elements */
+input:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- Headings --- */
+h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+}
+h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+h4 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+h5 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+}
+h6 {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+
+/* --- Links --- */
+a {
+  color: var(--fn-color-primary-500);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* --- Placeholder --- */
+::placeholder {
+  color: var(--fn-color-surface-300);
+  opacity: 1;
+}
+
+:where([data-mode='dark'], [data-mode='dark'] *) ::placeholder {
+  color: var(--fn-color-surface-600);
+  opacity: 1;
+}
+
+/* --- Images --- */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- Lists --- */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* --- Table base --- */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* ==========================================================================
+   4. PROSE
+   ========================================================================== */
+
+.fn-prose {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--fn-color-body);
+  max-width: 65ch;
+}
+
+.fn-prose h1 {
+  font-size: 2.25rem;
+  margin-top: 0;
+  margin-bottom: 0.8em;
+}
+.fn-prose h2 {
+  font-size: 1.5rem;
+  margin-top: 2em;
+  margin-bottom: 0.8em;
+}
+.fn-prose h3 {
+  font-size: 1.25rem;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+}
+.fn-prose h4 {
+  font-size: 1.125rem;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.fn-prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.fn-prose a {
+  color: var(--fn-color-primary-500);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.fn-prose strong {
+  font-weight: 600;
+}
+
+.fn-prose ul {
+  list-style: disc;
+  padding-left: 1.625em;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.fn-prose ol {
+  list-style: decimal;
+  padding-left: 1.625em;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.fn-prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.fn-prose blockquote {
+  border-left: 0.25rem solid var(--fn-color-border-strong);
+  padding-left: 1em;
+  font-style: italic;
+  margin-top: 1.6em;
+  margin-bottom: 1.6em;
+  color: var(--fn-color-body-muted);
+}
+
+.fn-prose code {
+  font-family: var(--fn-font-mono);
+  font-size: 0.875em;
+  background-color: var(--fn-color-bg-muted);
+  padding: 0.2em 0.4em;
+  border-radius: var(--fn-radius-sm);
+}
+
+.fn-prose pre {
+  background-color: var(--fn-color-surface-900);
+  color: var(--fn-color-surface-50);
+  border-radius: var(--fn-radius-md);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin-top: 1.75em;
+  margin-bottom: 1.75em;
+}
+
+.fn-prose pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.fn-prose hr {
+  border: none;
+  border-top: 1px solid var(--fn-color-divide);
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.fn-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.fn-prose th,
+.fn-prose td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--fn-color-divide);
+  text-align: left;
+}
+
+.fn-prose th {
+  font-weight: 600;
+}
+
+.fn-prose img {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-radius: var(--fn-radius-md);
+}
+
+/* ==========================================================================
+   5. UTILITY CLASSES
+   ========================================================================== */
+
+/* --- Layout: Flexbox --- */
+.fn-flex {
+  display: flex;
+}
+.fn-flex-col {
+  flex-direction: column;
+}
+.fn-flex-row {
+  flex-direction: row;
+}
+.fn-flex-wrap {
+  flex-wrap: wrap;
+}
+.fn-flex-nowrap {
+  flex-wrap: nowrap;
+}
+.fn-flex-1 {
+  flex: 1 1 0%;
+}
+.fn-inline-flex {
+  display: inline-flex;
+}
+.fn-items-center {
+  align-items: center;
+}
+.fn-items-start {
+  align-items: flex-start;
+}
+.fn-items-end {
+  align-items: flex-end;
+}
+.fn-justify-start {
+  justify-content: flex-start;
+}
+.fn-justify-center {
+  justify-content: center;
+}
+.fn-justify-between {
+  justify-content: space-between;
+}
+.fn-justify-end {
+  justify-content: flex-end;
+}
+.fn-shrink-0 {
+  flex-shrink: 0;
+}
+.fn-grow {
+  flex-grow: 1;
+}
+
+/* --- Layout: Grid --- */
+.fn-grid {
+  display: grid;
+}
+.fn-grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.fn-grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.fn-grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.fn-grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.fn-grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.fn-grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.fn-grid-cols-7 {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.fn-col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
+/* Compact hours/holiday table rows (LocationHours). One line per entry:
+   date | weekday | time | description (| icon) | actions. Weekly rows leave
+   the date cell empty so the weekday, time and description columns line up
+   across the Regular, Custom and Holiday lists. custom-2/3 (holidays) end
+   with a fixed icon column so the links align. */
+.fn-grid-cols-custom-5 {
+  grid-template-columns: 6.5rem 6rem 7.5rem minmax(0, 1fr) auto;
+}
+.fn-grid-cols-custom-2 {
+  grid-template-columns: 6.5rem 6rem 7.5rem minmax(0, 1fr) auto auto;
+}
+.fn-grid-cols-custom-3 {
+  grid-template-columns: 6.5rem 6rem 7.5rem minmax(0, 1fr) auto;
+}
+.fn-grid-cols-custom-4 {
+  grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+}
+/* Holiday rows: keep the actions cell the width of Edit + Delete even when a row
+   only has Edit, so the icon column before it stays put. */
+.fn-grid-cols-custom-2 > .fn-row-actions {
+  min-width: 6.75rem;
+  justify-content: flex-end;
+}
+
+/* Below md the fixed columns don't fit: date | day | hours (| icon | actions) stay on
+   the first line, and the wide cell (.fn-row-wrap: name, validity, badges, or
+   the inline editor) drops to a full-width second line. .fn-row-actions is
+   pinned to the first line's last column so it doesn't trail the wrap. */
+@media (max-width: 767px) {
+  .fn-grid-cols-custom-5 {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+  }
+  .fn-grid-cols-custom-2 {
+    grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+  }
+  .fn-grid-cols-custom-3 {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+  }
+  .fn-grid-cols-custom-5 > .fn-row-wrap,
+  .fn-grid-cols-custom-2 > .fn-row-wrap,
+  .fn-grid-cols-custom-3 > .fn-row-wrap {
+    grid-column: 1 / -1;
+  }
+  .fn-grid-cols-custom-5 > .fn-row-actions {
+    grid-row: 1;
+    grid-column: 4;
+  }
+  .fn-grid-cols-custom-2 > .fn-row-icon,
+  .fn-grid-cols-custom-3 > .fn-row-icon {
+    grid-row: 1;
+    grid-column: 4;
+  }
+  .fn-grid-cols-custom-2 > .fn-row-actions {
+    grid-row: 1;
+    grid-column: 5;
+  }
+  .fn-grid-cols-custom-5 > .fn-row-wrap:empty,
+  .fn-grid-cols-custom-3 > .fn-row-wrap:empty {
+    display: none;
+  }
+}
+/* Custom-date rows carry three actions (Add break | Edit | Delete), which don't fit beside
+   date | day | time. Below sm they are icons, but with a long time ("08:30 - 15:00") they still
+   overflowed and the first icon landed on the time: the time takes the whole first line and the
+   buttons sit at the end of the second, beside the message. Between sm and md (text buttons)
+   they get a line of their own after the message. */
+@media (max-width: 639px) {
+  .fn-grid-cols-custom-5.fn-row-actions-below > .fn-row-time {
+    grid-column: 3 / -1;
+  }
+  .fn-grid-cols-custom-5.fn-row-actions-below > .fn-row-wrap {
+    grid-row: 2;
+    grid-column: 1 / 4;
+  }
+  .fn-grid-cols-custom-5.fn-row-actions-below > .fn-row-actions {
+    grid-row: 2;
+    grid-column: 4;
+  }
+}
+@media (min-width: 640px) and (max-width: 767px) {
+  .fn-grid-cols-custom-5.fn-row-actions-below {
+    grid-template-columns: auto auto minmax(0, 1fr);
+  }
+  .fn-grid-cols-custom-5.fn-row-actions-below > .fn-row-actions {
+    grid-row: auto;
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+}
+@media (min-width: 640px) {
+  .fn-sm-grid-cols-custom {
+    grid-template-columns: 6.5rem 6rem 10rem minmax(0, 1fr) auto;
+  }
+}
+@media (min-width: 768px) {
+  .fn-md-grid-cols-custom {
+    grid-template-columns: 6.5rem 6rem 10rem minmax(0, 1fr) auto;
+  }
+}
+
+/* --- Layout: Display --- */
+.fn-block {
+  display: block;
+}
+.fn-inline {
+  display: inline;
+}
+.fn-inline-block {
+  display: inline-block;
+}
+.fn-contents {
+  display: contents;
+}
+
+/* --- Spacing: Gap --- */
+.fn-gap-0 {
+  gap: 0;
+}
+.fn-gap-0\.5 {
+  gap: 0.125rem;
+}
+.fn-gap-1 {
+  gap: 0.25rem;
+}
+.fn-gap-1\.5 {
+  gap: 0.375rem;
+}
+.fn-gap-2 {
+  gap: 0.5rem;
+}
+.fn-gap-3 {
+  gap: 0.75rem;
+}
+.fn-gap-4 {
+  gap: 1rem;
+}
+.fn-gap-5 {
+  gap: 1.25rem;
+}
+.fn-gap-6 {
+  gap: 1.5rem;
+}
+
+/* --- Spacing: Space-Y --- */
+.fn-space-y-0\.5 > * + * {
+  margin-top: 0.125rem;
+}
+.fn-space-y-1 > * + * {
+  margin-top: 0.25rem;
+}
+.fn-space-y-1\.5 > * + * {
+  margin-top: 0.375rem;
+}
+.fn-space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+.fn-space-y-3 > * + * {
+  margin-top: 0.75rem;
+}
+.fn-space-y-4 > * + * {
+  margin-top: 1rem;
+}
+.fn-space-y-5 > * + * {
+  margin-top: 1.25rem;
+}
+.fn-space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+/* --- Spacing: Space-X --- */
+.fn-space-x-2 > * + * {
+  margin-left: 0.5rem;
+}
+
+/* --- Spacing: Padding --- */
+.fn-p-0 {
+  padding: 0;
+}
+.fn-p-0\.5 {
+  padding: 0.125rem;
+}
+.fn-p-1 {
+  padding: 0.25rem;
+}
+.fn-p-1\.5 {
+  padding: 0.375rem;
+}
+.fn-p-2 {
+  padding: 0.5rem;
+}
+.fn-p-3 {
+  padding: 0.75rem;
+}
+.fn-p-4 {
+  padding: 1rem;
+}
+.fn-p-5 {
+  padding: 1.25rem;
+}
+.fn-p-6 {
+  padding: 1.5rem;
+}
+.fn-p-8 {
+  padding: 2rem;
+}
+.fn-p-10 {
+  padding: 2.5rem;
+}
+.fn-p-12 {
+  padding: 3rem;
+}
+
+.fn-px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+.fn-px-1\.5 {
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+}
+.fn-px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.fn-px-2\.5 {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+.fn-px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+.fn-px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.fn-py-0\.5 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+.fn-py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+.fn-py-1\.5 {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+.fn-py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.fn-py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.fn-py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.fn-py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.fn-py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.fn-py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+.fn-py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.fn-pl-3 {
+  padding-left: 0.75rem;
+}
+.fn-pl-4 {
+  padding-left: 1rem;
+}
+.fn-pl-6 {
+  padding-left: 1.5rem;
+}
+.fn-pl-10 {
+  padding-left: 2.5rem;
+}
+
+/* Directional padding on inputs: double the class so these beat .fn-input's
+   padding shorthand, which is declared later in this file and would
+   otherwise win the same-specificity tie */
+.fn-input.fn-pl-10 {
+  padding-left: 2.5rem;
+}
+.fn-input.fn-pr-8 {
+  padding-right: 2rem;
+}
+.fn-input.fn-pr-10 {
+  padding-right: 2.5rem;
+}
+
+.fn-pr-4 {
+  padding-right: 1rem;
+}
+.fn-pr-8 {
+  padding-right: 2rem;
+}
+.fn-pr-10 {
+  padding-right: 2.5rem;
+}
+
+.fn-pb-1 {
+  padding-bottom: 0.25rem;
+}
+.fn-pb-2 {
+  padding-bottom: 0.5rem;
+}
+.fn-pb-3 {
+  padding-bottom: 0.75rem;
+}
+.fn-pb-4 {
+  padding-bottom: 1rem;
+}
+
+.fn-pt-1 {
+  padding-top: 0.25rem;
+}
+.fn-pt-2 {
+  padding-top: 0.5rem;
+}
+.fn-pt-3 {
+  padding-top: 0.75rem;
+}
+.fn-pt-4 {
+  padding-top: 1rem;
+}
+.fn-pt-6 {
+  padding-top: 1.5rem;
+}
+.fn-pt-73 {
+  padding-top: 73px;
+}
+
+/* --- Spacing: Margins --- */
+.fn-m-4 {
+  margin: 1rem;
+}
+.fn-mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+.fn-mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.fn--mx-2 {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+.fn-my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+.fn-mb-1 {
+  margin-bottom: 0.25rem;
+}
+.fn-mb-2 {
+  margin-bottom: 0.5rem;
+}
+.fn-mb-3 {
+  margin-bottom: 0.75rem;
+}
+.fn-mb-4 {
+  margin-bottom: 1rem;
+}
+.fn-mb-5 {
+  margin-bottom: 1.25rem;
+}
+.fn-mb-6 {
+  margin-bottom: 1.5rem;
+}
+.fn-ml-1 {
+  margin-left: 0.25rem;
+}
+.fn-ml-2 {
+  margin-left: 0.5rem;
+}
+.fn-ml-3 {
+  margin-left: 0.75rem;
+}
+.fn-ml-7 {
+  margin-left: 1.75rem;
+}
+.fn-ml-auto {
+  margin-left: auto;
+}
+.fn-mr-1 {
+  margin-right: 0.25rem;
+}
+.fn-mr-2 {
+  margin-right: 0.5rem;
+}
+.fn-mt-0\.5 {
+  margin-top: 0.125rem;
+}
+.fn-mt-1 {
+  margin-top: 0.25rem;
+}
+.fn-mt-2 {
+  margin-top: 0.5rem;
+}
+.fn-mt-3 {
+  margin-top: 0.75rem;
+}
+.fn-mt-4 {
+  margin-top: 1rem;
+}
+.fn-mt-5 {
+  margin-top: 1.25rem;
+}
+.fn-mt-6 {
+  margin-top: 1.5rem;
+}
+.-fn-mx-2 {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+/* --- Typography: Sizes --- */
+.fn-text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.fn-text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.fn-text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.fn-text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.fn-text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.fn-text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.fn-text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.fn-text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+.fn-text-\[10px\] {
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* --- Typography: Weights --- */
+.fn-font-normal {
+  font-weight: 400;
+}
+.fn-font-medium {
+  font-weight: 500;
+}
+.fn-font-semibold {
+  font-weight: 600;
+}
+.fn-font-bold {
+  font-weight: 700;
+}
+.fn-font-mono {
+  font-family: var(--fn-font-mono);
+}
+.fn-tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Typography: Alignment --- */
+.fn-text-left {
+  text-align: left;
+}
+.fn-text-center {
+  text-align: center;
+}
+.fn-text-right {
+  text-align: right;
+}
+
+/* --- Typography: Decoration & Transform --- */
+.fn-capitalize {
+  text-transform: capitalize;
+}
+.fn-line-through {
+  text-decoration: line-through;
+}
+.fn-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fn-whitespace-nowrap {
+  white-space: nowrap;
+}
+.fn-whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
+.fn-break-all {
+  word-break: break-all;
+}
+.fn-align-top {
+  vertical-align: top;
+}
+.fn-list-disc {
+  list-style-type: disc;
+}
+.fn-list-inside {
+  list-style-position: inside;
+}
+
+/* --- Typography: Heading Classes --- */
+.fn-h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+.fn-h4 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+
+/* --- Sizing: Width --- */
+.fn-w-3 {
+  width: 0.75rem;
+}
+.fn-w-4 {
+  width: 1rem;
+}
+.fn-w-5 {
+  width: 1.25rem;
+}
+.fn-w-6 {
+  width: 1.5rem;
+}
+.fn-w-8 {
+  width: 2rem;
+}
+.fn-w-10 {
+  width: 2.5rem;
+}
+.fn-w-12 {
+  width: 3rem;
+}
+.fn-w-16 {
+  width: 4rem;
+}
+.fn-w-20 {
+  width: 5rem;
+}
+.fn-w-24 {
+  width: 6rem;
+}
+.fn-w-28 {
+  width: 7rem;
+}
+.fn-w-32 {
+  width: 8rem;
+}
+.fn-w-36 {
+  width: 9rem;
+}
+.fn-w-40 {
+  width: 10rem;
+}
+.fn-w-48 {
+  width: 12rem;
+}
+.fn-w-64 {
+  width: 16rem;
+}
+.fn-w-full {
+  width: 100%;
+}
+
+/* --- Sizing: Height --- */
+.fn-h-2\.5 {
+  height: 0.625rem;
+}
+.fn-h-3 {
+  height: 0.75rem;
+}
+.fn-h-4 {
+  height: 1rem;
+}
+.fn-h-5 {
+  height: 1.25rem;
+}
+.fn-h-6 {
+  height: 1.5rem;
+}
+.fn-h-8 {
+  height: 2rem;
+}
+.fn-h-10 {
+  height: 2.5rem;
+}
+.fn-h-12 {
+  height: 3rem;
+}
+.fn-h-16 {
+  height: 4rem;
+}
+.fn-h-20 {
+  height: 5rem;
+}
+.fn-h-24 {
+  height: 6rem;
+}
+.fn-h-full {
+  height: 100%;
+}
+.fn-h-screen {
+  height: 100vh;
+  /* iOS: 100vh is the height with the browser bars hidden, so a 100vh shell ran its bottom
+     ~80px under Chrome/Brave/Safari's toolbar, out of reach. dvh is the visible height. */
+  height: 100dvh;
+}
+/* Full-height but free to grow: tall auth forms on a phone scroll instead of clipping. */
+.fn-min-h-screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.fn-h-500 {
+  height: 500px;
+}
+
+/* --- Sizing: Size (width + height) --- */
+.fn-size-3 {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+.fn-size-4 {
+  width: 1rem;
+  height: 1rem;
+}
+.fn-size-5 {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.fn-size-6 {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.fn-size-8 {
+  width: 2rem;
+  height: 2rem;
+}
+.fn-size-10 {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.fn-size-12 {
+  width: 3rem;
+  height: 3rem;
+}
+.fn-size-16 {
+  width: 4rem;
+  height: 4rem;
+}
+.fn-size-20 {
+  width: 5rem;
+  height: 5rem;
+}
+.fn-size-24 {
+  width: 6rem;
+  height: 6rem;
+}
+.fn-size-32 {
+  width: 8rem;
+  height: 8rem;
+}
+
+/* --- Sizing: Max Width --- */
+.fn-max-w-xs {
+  max-width: 20rem;
+}
+.fn-max-w-sm {
+  max-width: 24rem;
+}
+.fn-max-w-md {
+  max-width: 28rem;
+}
+.fn-max-w-lg {
+  max-width: 32rem;
+}
+.fn-max-w-xl {
+  max-width: 36rem;
+}
+.fn-max-w-2xl {
+  max-width: 42rem;
+}
+.fn-max-w-3xl {
+  max-width: 48rem;
+}
+.fn-max-w-4xl {
+  max-width: 56rem;
+}
+.fn-max-w-5xl {
+  max-width: 64rem;
+}
+.fn-max-w-64 {
+  max-width: 16rem;
+}
+.fn-max-w-full {
+  max-width: 100%;
+}
+
+/* --- Sizing: Min Width --- */
+.fn-min-w-0 {
+  min-width: 0;
+}
+.fn-min-w-60 {
+  min-width: 60px;
+}
+.fn-min-w-200 {
+  min-width: 200px;
+}
+
+/* --- Sizing: Max Height --- */
+.fn-max-h-12 {
+  max-height: 3rem;
+}
+.fn-max-h-24 {
+  max-height: 6rem;
+}
+.fn-max-h-32 {
+  max-height: 8rem;
+}
+.fn-max-h-40 {
+  max-height: 10rem;
+}
+.fn-max-h-48 {
+  max-height: 12rem;
+}
+.fn-max-h-60 {
+  max-height: 15rem;
+}
+.fn-max-h-64 {
+  max-height: 16rem;
+}
+.fn-max-h-80 {
+  max-height: 20rem;
+}
+.fn-max-h-96 {
+  max-height: 24rem;
+}
+.fn-max-h-300 {
+  max-height: 300px;
+}
+.fn-max-h-full {
+  max-height: 100%;
+}
+
+/* --- Sizing: Min Height --- */
+.fn-min-h-200 {
+  min-height: 200px;
+}
+
+/* --- Sizing: Aspect Ratio --- */
+.fn-aspect-square {
+  aspect-ratio: 1 / 1;
+}
+.fn-aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+/* --- Sizing: Viewport --- */
+.fn-w-90vw {
+  width: 90vw;
+}
+
+/* ==========================================================================
+   5b. COLOR UTILITIES
+   ========================================================================== */
+
+/* --- Text Colors --- */
+.fn-text-body {
+  color: var(--fn-color-body);
+}
+.fn-text-muted {
+  color: var(--fn-color-body-muted);
+}
+.fn-text-faint {
+  color: var(--fn-color-body-faint);
+}
+.fn-text-subtle {
+  color: var(--fn-color-surface-500);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-text-subtle {
+  color: var(--fn-color-surface-400);
+}
+.fn-text-primary {
+  color: var(--fn-color-primary-500);
+}
+.fn-text-primary-600 {
+  color: var(--fn-color-primary-600);
+}
+.fn-text-secondary-600 {
+  color: var(--fn-color-secondary-600);
+}
+.fn-text-tertiary-500 {
+  color: var(--fn-color-tertiary-500);
+}
+.fn-text-success {
+  color: var(--fn-color-success-600);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-text-success {
+  color: var(--fn-color-success-400);
+}
+.fn-text-success-500 {
+  color: var(--fn-color-success-500);
+}
+.fn-text-success-strong {
+  color: var(--fn-color-success-700);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-text-success-strong {
+  color: var(--fn-color-success-300);
+}
+.fn-text-warning {
+  color: var(--fn-color-warning-600);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-text-warning {
+  color: var(--fn-color-warning-400);
+}
+.fn-text-warning-500 {
+  color: var(--fn-color-warning-500);
+}
+.fn-text-warning-700 {
+  color: var(--fn-color-warning-700);
+}
+.fn-text-error {
+  color: var(--fn-color-error-500);
+}
+.fn-text-error-600 {
+  color: var(--fn-color-error-600);
+}
+.fn-text-white {
+  color: var(--fn-color-on-solid);
+}
+.fn-text-blue-600 {
+  color: oklch(54.6% 0.18 249.65deg);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-text-blue-600 {
+  color: oklch(68.8% 0.15 246.06deg);
+}
+.fn-text-red-500 {
+  color: oklch(63.7% 0.24 25.33deg);
+}
+.fn-text-red-600 {
+  color: oklch(57.7% 0.22 27.33deg);
+}
+.fn-text-gray-400 {
+  color: rgb(156 163 175);
+}
+.fn-text-gray-500 {
+  color: rgb(107 114 128);
+}
+.fn-text-gray-600 {
+  color: rgb(75 85 99);
+}
+.fn-text-gray-700 {
+  color: rgb(55 65 81);
+}
+.fn-text-gray-900 {
+  color: rgb(17 24 39);
+}
+.fn-text-surface-100 {
+  color: var(--fn-color-surface-100);
+}
+.fn-text-surface-300 {
+  color: var(--fn-color-surface-300);
+}
+.fn-text-surface-400 {
+  color: var(--fn-color-surface-400);
+}
+.fn-text-surface-500 {
+  color: var(--fn-color-surface-500);
+}
+.fn-text-surface-600 {
+  color: var(--fn-color-surface-600);
+}
+.fn-text-surface-700 {
+  color: var(--fn-color-surface-700);
+}
+.fn-text-surface-900 {
+  color: var(--fn-color-surface-900);
+}
+
+/* --- Background Colors --- */
+.fn-bg-page {
+  background-color: var(--fn-color-bg-page);
+}
+.fn-bg-surface {
+  background-color: var(--fn-color-bg-surface);
+}
+.fn-bg-muted {
+  background-color: var(--fn-color-bg-muted);
+}
+.fn-bg-accent {
+  background-color: var(--fn-color-bg-accent);
+}
+.fn-bg-white {
+  background-color: #fff;
+}
+.fn-bg-transparent {
+  background-color: transparent;
+}
+.fn-bg-muted-deep {
+  background-color: var(--fn-color-surface-200);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-bg-muted-deep {
+  background-color: var(--fn-color-surface-700);
+}
+.fn-bg-accent-strong {
+  background-color: var(--fn-color-surface-300);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-bg-accent-strong {
+  background-color: var(--fn-color-surface-600);
+}
+
+/* Primary backgrounds with alpha */
+.fn-bg-primary-5 {
+  background-color: oklch(from var(--fn-color-primary-500) l c h / 0.05);
+}
+.fn-bg-primary-10 {
+  background-color: oklch(from var(--fn-color-primary-500) l c h / 0.1);
+}
+.fn-bg-primary-20 {
+  background-color: oklch(from var(--fn-color-primary-500) l c h / 0.2);
+}
+.fn-bg-primary-50 {
+  background-color: oklch(from var(--fn-color-primary-500) l c h / 0.5);
+}
+.fn-bg-primary-90 {
+  background-color: oklch(from var(--fn-color-primary-500) l c h / 0.9);
+}
+.fn-bg-primary-500 {
+  background-color: var(--fn-color-primary-500);
+}
+
+/* Secondary backgrounds with alpha */
+.fn-bg-secondary-20 {
+  background-color: oklch(from var(--fn-color-secondary-500) l c h / 0.2);
+}
+
+/* Tertiary backgrounds with alpha */
+.fn-bg-tertiary-20 {
+  background-color: oklch(from var(--fn-color-tertiary-500) l c h / 0.2);
+}
+
+/* Success backgrounds with alpha */
+.fn-bg-success-10 {
+  background-color: oklch(from var(--fn-color-success-500) l c h / 0.1);
+}
+.fn-bg-success-20 {
+  background-color: oklch(from var(--fn-color-success-500) l c h / 0.2);
+}
+
+/* Warning backgrounds with alpha */
+.fn-bg-warning-5 {
+  background-color: oklch(from var(--fn-color-warning-500) l c h / 0.05);
+}
+.fn-bg-warning-10 {
+  background-color: oklch(from var(--fn-color-warning-500) l c h / 0.1);
+}
+.fn-bg-warning-15 {
+  background-color: oklch(from var(--fn-color-warning-500) l c h / 0.15);
+}
+.fn-bg-warning-20 {
+  background-color: oklch(from var(--fn-color-warning-500) l c h / 0.2);
+}
+
+/* Error backgrounds with alpha */
+.fn-bg-error-10 {
+  background-color: oklch(from var(--fn-color-error-500) l c h / 0.1);
+}
+.fn-bg-error-20 {
+  background-color: oklch(from var(--fn-color-error-500) l c h / 0.2);
+}
+
+/* Surface backgrounds with alpha */
+.fn-bg-surface-5 {
+  background-color: oklch(from var(--fn-color-surface-500) l c h / 0.05);
+}
+.fn-bg-surface-10 {
+  background-color: oklch(from var(--fn-color-surface-500) l c h / 0.1);
+}
+.fn-bg-surface-15 {
+  background-color: oklch(from var(--fn-color-surface-500) l c h / 0.15);
+}
+.fn-bg-surface-20 {
+  background-color: oklch(from var(--fn-color-surface-500) l c h / 0.2);
+}
+.fn-bg-surface-100 {
+  background-color: var(--fn-color-surface-100);
+}
+.fn-bg-surface-200 {
+  background-color: var(--fn-color-surface-200);
+}
+.fn-bg-surface-900 {
+  background-color: var(--fn-color-surface-900);
+}
+
+/* Composite alpha backgrounds */
+.fn-bg-surface-50-30 {
+  background-color: oklch(from var(--fn-color-surface-50) l c h / 0.3);
+}
+.fn-bg-surface-950-50 {
+  background-color: oklch(from var(--fn-color-surface-950) l c h / 0.5);
+}
+.fn-bg-surface-950-75 {
+  background-color: oklch(from var(--fn-color-surface-950) l c h / 0.75);
+}
+.fn-bg-white-50 {
+  background-color: rgb(255 255 255 / 0.5);
+}
+.fn-bg-gray-100 {
+  background-color: rgb(243 244 246);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-bg-gray-100 {
+  background-color: rgb(55 65 81 / 0.4);
+}
+
+/* ==========================================================================
+   5c. HOVER UTILITIES
+   ========================================================================== */
+
+.fn-hover-bg-primary-20:hover {
+  background-color: oklch(from var(--fn-color-primary-500) l c h / 0.2);
+}
+.fn-hover-bg-error-20:hover {
+  background-color: oklch(from var(--fn-color-error-500) l c h / 0.2);
+}
+.fn-hover-bg-success-20:hover {
+  background-color: oklch(from var(--fn-color-success-500) l c h / 0.2);
+}
+.fn-hover-bg-muted:hover {
+  background-color: var(--fn-color-bg-muted);
+}
+.fn-hover-bg-muted-deep:hover {
+  background-color: var(--fn-color-bg-accent);
+}
+.fn-hover-bg-accent:hover {
+  background-color: var(--fn-color-bg-accent);
+}
+.fn-hover-bg-surface-10:hover {
+  background-color: oklch(from var(--fn-color-surface-500) l c h / 0.1);
+}
+.fn-hover-bg-gray-50:hover {
+  background-color: rgb(249 250 251);
+}
+.fn-hover-text-primary:hover {
+  color: var(--fn-color-primary-500);
+}
+.fn-hover-text-error:hover {
+  color: var(--fn-color-error-500);
+}
+.fn-hover-text-body:hover {
+  color: var(--fn-color-body);
+}
+.fn-hover-text-muted:hover {
+  color: var(--fn-color-body-muted);
+}
+.fn-hover-underline:hover {
+  text-decoration: underline;
+}
+.fn-hover-scale-105:hover {
+  transform: scale(1.05);
+}
+.fn-hover-shadow-lg:hover {
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.fn-hover-ring-primary:hover {
+  box-shadow: 0 0 0 2px var(--fn-color-primary-500);
+}
+.fn-ring-primary {
+  box-shadow: 0 0 0 2px var(--fn-color-primary-500);
+}
+.fn-hover-border-primary:hover {
+  border-color: var(--fn-color-primary-500);
+}
+
+/* ==========================================================================
+   5d. BORDER UTILITIES
+   ========================================================================== */
+
+.fn-border {
+  border: 1px solid var(--fn-color-border);
+}
+.fn-border-2 {
+  border: 2px solid var(--fn-color-border);
+}
+.fn-border-b {
+  border-bottom: 1px solid var(--fn-color-border);
+}
+.fn-border-b-0 {
+  border-bottom: 0;
+}
+.fn-border-b-2 {
+  border-bottom: 2px solid var(--fn-color-border);
+}
+.fn-border-t {
+  border-top: 1px solid var(--fn-color-border);
+}
+.fn-border-t-0 {
+  border-top: 0;
+}
+.fn-border-t-2 {
+  border-top: 2px solid var(--fn-color-border);
+}
+.fn-border-l {
+  border-left: 1px solid var(--fn-color-border);
+}
+.fn-border-l-2 {
+  border-left: 2px solid var(--fn-color-border);
+}
+.fn-border-r {
+  border-right: 1px solid var(--fn-color-border);
+}
+.fn-border-dashed {
+  border-style: dashed;
+}
+.fn-border-t-transparent {
+  border-top-color: transparent;
+}
+
+/* Border colors */
+.fn-border-color {
+  border-color: var(--fn-color-border);
+}
+.fn-last-border-b-0:last-child {
+  border-bottom: 0;
+}
+.fn-border-primary {
+  border-color: var(--fn-color-primary-500);
+}
+.fn-border-primary-200 {
+  border-color: var(--fn-color-primary-200);
+}
+.fn-border-primary-30 {
+  border-color: oklch(from var(--fn-color-primary-500) l c h / 0.3);
+}
+.fn-border-error {
+  border-color: var(--fn-color-error-500);
+}
+.fn-border-error-20 {
+  border-color: oklch(from var(--fn-color-error-500) l c h / 0.2);
+}
+.fn-border-error-30 {
+  border-color: oklch(from var(--fn-color-error-500) l c h / 0.3);
+}
+.fn-border-warning-30 {
+  border-color: oklch(from var(--fn-color-warning-500) l c h / 0.3);
+}
+.fn-border-warning-50 {
+  border-color: oklch(from var(--fn-color-warning-500) l c h / 0.5);
+}
+.fn-border-surface-strong {
+  border-color: var(--fn-color-border-strong);
+}
+.fn-border-default {
+  border-color: var(--fn-color-border);
+}
+.fn-border-gray-300 {
+  border-color: rgb(209 213 219);
+}
+.fn-border-gray-400 {
+  border-color: rgb(156 163 175);
+}
+
+/* Border radius */
+.fn-rounded-sm {
+  border-radius: var(--fn-radius-sm);
+}
+.fn-rounded {
+  border-radius: var(--fn-radius);
+}
+.fn-rounded-md {
+  border-radius: var(--fn-radius-md);
+}
+.fn-rounded-lg {
+  border-radius: var(--fn-radius-lg);
+}
+.fn-rounded-xl {
+  border-radius: var(--fn-radius-xl);
+}
+.fn-rounded-2xl {
+  border-radius: var(--fn-radius-2xl);
+}
+.fn-rounded-full {
+  border-radius: var(--fn-radius-full);
+}
+.fn-rounded-b {
+  border-bottom-left-radius: var(--fn-radius);
+  border-bottom-right-radius: var(--fn-radius);
+}
+.fn-rounded-t {
+  border-top-left-radius: var(--fn-radius);
+  border-top-right-radius: var(--fn-radius);
+}
+.fn-rounded-none {
+  border-radius: 0;
+}
+
+/* Divide */
+.fn-divide-y > * + * {
+  border-top: 1px solid var(--fn-color-divide);
+}
+
+/* ==========================================================================
+   5e. POSITIONING UTILITIES
+   ========================================================================== */
+
+.fn-relative {
+  position: relative;
+}
+.fn-absolute {
+  position: absolute;
+}
+.fn-fixed {
+  position: fixed;
+}
+.fn-sticky {
+  position: sticky;
+}
+.fn-inset-0 {
+  inset: 0;
+}
+.fn-top-0 {
+  top: 0;
+}
+.fn-top-2 {
+  top: 0.5rem;
+}
+.fn-top-full {
+  top: 100%;
+}
+.fn-bottom-0 {
+  bottom: 0;
+}
+.fn-left-0 {
+  left: 0;
+}
+.fn-left-2 {
+  left: 0.5rem;
+}
+.fn-left-3 {
+  left: 0.75rem;
+}
+.fn-right-0 {
+  right: 0;
+}
+.fn-right-1 {
+  right: 0.25rem;
+}
+.fn-right-2 {
+  right: 0.5rem;
+}
+.fn-right-3 {
+  right: 0.75rem;
+}
+.fn-top-half {
+  top: 50%;
+}
+.fn-left-half {
+  left: 50%;
+}
+.fn-translate-center {
+  transform: translate(-50%, -50%);
+}
+.fn-translate-y-center {
+  transform: translateY(-50%);
+}
+
+/* Z-index */
+.fn-z-1 {
+  z-index: 1;
+}
+.fn-z-10 {
+  z-index: 10;
+}
+.fn-z-40 {
+  z-index: 40;
+}
+.fn-z-50 {
+  z-index: 50;
+}
+
+/* ==========================================================================
+   5f. VISIBILITY & OVERFLOW UTILITIES
+   ========================================================================== */
+
+.fn-hidden {
+  display: none;
+}
+.fn-overflow-auto {
+  overflow: auto;
+}
+.fn-overflow-hidden {
+  overflow: hidden;
+}
+.fn-overflow-x-auto {
+  overflow-x: auto;
+}
+.fn-overflow-y-auto {
+  overflow-y: auto;
+}
+.fn-pointer-events-none {
+  pointer-events: none;
+}
+.fn-select-all {
+  user-select: all;
+}
+
+/* ==========================================================================
+   5g. EFFECT UTILITIES
+   ========================================================================== */
+
+.fn-shadow-lg {
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.fn-shadow-xl {
+  box-shadow:
+    0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+.fn-shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.fn-opacity-0 {
+  opacity: 0;
+}
+.fn-opacity-25 {
+  opacity: 0.25;
+}
+.fn-opacity-30 {
+  opacity: 0.3;
+}
+.fn-opacity-40 {
+  opacity: 0.4;
+}
+.fn-opacity-50 {
+  opacity: 0.5;
+}
+.fn-opacity-60 {
+  opacity: 0.6;
+}
+.fn-opacity-70 {
+  opacity: 0.7;
+}
+.fn-opacity-75 {
+  opacity: 0.75;
+}
+.fn-opacity-90 {
+  opacity: 0.9;
+}
+
+.fn-italic {
+  font-style: italic;
+}
+
+.fn-transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.fn-transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.fn-transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.fn-duration-300 {
+  transition-duration: 300ms;
+}
+
+.fn-cursor-pointer {
+  cursor: pointer;
+}
+.fn-cursor-default {
+  cursor: default;
+}
+.fn-cursor-wait {
+  cursor: wait;
+}
+.fn-cursor-not-allowed {
+  cursor: not-allowed;
+}
+.fn-cursor-grab {
+  cursor: grab;
+}
+.fn-cursor-move {
+  cursor: move;
+}
+
+.fn-backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.fn-group {
+  /* Group parent marker */
+}
+.fn-group:hover .fn-group-hover-visible,
+.fn-group:focus-within .fn-group-hover-visible {
+  visibility: visible;
+  opacity: 1;
+}
+.fn-group-hover-visible {
+  visibility: hidden;
+  opacity: 0;
+}
+/* No hover on a touch screen: show them, or they can never be reached. */
+@media (hover: none) {
+  .fn-group-hover-visible {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.fn-object-contain {
+  object-fit: contain;
+}
+.fn-object-cover {
+  object-fit: cover;
+}
+
+/* Spin animation */
+.fn-spin {
+  animation: fn-spin 1s linear infinite;
+}
+@keyframes fn-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse animation */
+.fn-pulse {
+  animation: fn-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes fn-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ==========================================================================
+   5h. RESPONSIVE UTILITIES
+   ========================================================================== */
+
+/* sm (≥640px) */
+@media (min-width: 640px) {
+  .fn-sm-block {
+    display: block;
+  }
+  .fn-sm-hidden {
+    display: none !important;
+  }
+  .fn-sm-inline {
+    display: inline;
+  }
+  .fn-sm-inline-flex {
+    display: inline-flex;
+  }
+  .fn-sm-flex {
+    display: flex;
+  }
+  .fn-sm-flex-row {
+    flex-direction: row;
+  }
+  .fn-sm-items-center {
+    align-items: center;
+  }
+  .fn-sm-gap-2 {
+    gap: 0.5rem;
+  }
+  .fn-sm-gap-3 {
+    gap: 0.75rem;
+  }
+  .fn-sm-gap-4 {
+    gap: 1rem;
+  }
+  .fn-sm-text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  .fn-sm-text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  .fn-sm-grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fn-sm-grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .fn-sm-col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+  .fn-sm-mb-6 {
+    margin-bottom: 1.5rem;
+  }
+  .fn-sm-p-6 {
+    padding: 1.5rem;
+  }
+}
+
+/* md (≥768px) */
+@media (min-width: 768px) {
+  .fn-md-block {
+    display: block;
+  }
+  .fn-md-flex {
+    display: flex;
+  }
+  .fn-md-grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fn-md-grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .fn-md-grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .fn-md-grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .fn-md-grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .fn-md-col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+  .fn-md-col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+  .fn-md-hidden {
+    display: none !important;
+  }
+  .fn-md-flex-row {
+    flex-direction: row;
+  }
+  .fn-md-items-center {
+    align-items: center;
+  }
+  .fn-md-gap-2 {
+    gap: 0.5rem;
+  }
+  .fn-md-gap-3 {
+    gap: 0.75rem;
+  }
+}
+
+/* lg (≥1024px) */
+@media (min-width: 1024px) {
+  .fn-lg-block {
+    display: block;
+  }
+  .fn-lg-hidden {
+    display: none !important;
+  }
+  .fn-lg-grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .fn-lg-grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .fn-lg-grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .fn-lg-grid-cols-sidebar {
+    grid-template-columns: 208px 1fr;
+  }
+  .fn-lg-col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+  .fn-lg-col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+}
+
+/* xl (≥1280px) */
+@media (min-width: 1280px) {
+  .fn-xl-grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .fn-xl-grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================================
+   6. COMPONENT CLASSES
+   ========================================================================== */
+
+/* --- Buttons --- */
+
+/* Bare <button>s carry no native chrome. :where() keeps this at zero
+   specificity so every styled button (.fn-btn*, .fn-icon-btn, .fn-badge, and
+   utility classes) overrides it. "Simple is best" — an unstyled button reads
+   as plain inline text/icon, not an OS grey box. */
+:where(button) {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.fn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.fn-btn.fn-justify-start {
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  border-radius: var(--fn-radius-lg);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.fn-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.fn-btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  border-radius: var(--fn-radius);
+}
+
+.fn-btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.fn-btn-primary {
+  background-color: var(--fn-color-primary-500);
+  color: var(--fn-color-on-solid);
+}
+.fn-btn-primary:hover {
+  background-color: var(--fn-color-primary-600);
+}
+
+.fn-btn-error {
+  background-color: var(--fn-color-error-500);
+  color: var(--fn-color-on-solid);
+}
+.fn-btn-error:hover {
+  background-color: var(--fn-color-error-600);
+}
+
+.fn-btn-success {
+  background-color: var(--fn-color-success-500);
+  color: var(--fn-color-on-solid);
+}
+.fn-btn-success:hover {
+  background-color: var(--fn-color-success-600);
+}
+
+.fn-btn-warning {
+  background-color: var(--fn-color-warning-500);
+  color: var(--fn-color-on-solid);
+}
+.fn-btn-warning:hover {
+  background-color: var(--fn-color-warning-600);
+}
+
+.fn-btn-surface {
+  background-color: var(--fn-color-surface-200);
+  color: var(--fn-color-surface-800);
+}
+.fn-btn-surface:hover {
+  background-color: var(--fn-color-surface-300);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-btn-surface {
+  background-color: var(--fn-color-surface-700);
+  color: var(--fn-color-surface-200);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-btn-surface:hover {
+  background-color: var(--fn-color-surface-600);
+}
+
+.fn-btn-ghost {
+  background-color: transparent;
+  color: var(--fn-color-body);
+}
+.fn-btn-ghost:hover {
+  background-color: var(--fn-color-bg-muted);
+}
+
+.fn-btn-ghost-primary {
+  background-color: transparent;
+  color: var(--fn-color-primary-500);
+}
+.fn-btn-ghost-primary:hover {
+  background-color: oklch(from var(--fn-color-primary-500) l c h / 0.1);
+}
+
+.fn-btn-ghost-error {
+  background-color: transparent;
+  color: var(--fn-color-error-500);
+}
+.fn-btn-ghost-error:hover {
+  background-color: oklch(from var(--fn-color-error-500) l c h / 0.1);
+}
+
+.fn-btn-ghost-success {
+  background-color: transparent;
+  color: var(--fn-color-success-500);
+}
+.fn-btn-ghost-success:hover {
+  background-color: oklch(from var(--fn-color-success-500) l c h / 0.1);
+}
+
+.fn-btn-ghost-warning {
+  background-color: transparent;
+  color: var(--fn-color-warning-500);
+}
+.fn-btn-ghost-warning:hover {
+  background-color: oklch(from var(--fn-color-warning-500) l c h / 0.1);
+}
+
+.fn-btn-outlined-error {
+  background-color: transparent;
+  color: var(--fn-color-error-500);
+  border-color: var(--fn-color-error-500);
+}
+.fn-btn-outlined-error:hover {
+  background-color: oklch(from var(--fn-color-error-500) l c h / 0.1);
+}
+
+.fn-btn-outlined {
+  background-color: transparent;
+  color: var(--fn-color-body);
+  border-color: var(--fn-color-border-strong);
+}
+.fn-btn-outlined:hover {
+  background-color: var(--fn-color-bg-muted);
+}
+
+.fn-btn-ghost-plain {
+  background-color: transparent;
+  color: var(--fn-color-body-muted);
+  padding: 0.25rem;
+  border-radius: var(--fn-radius);
+}
+.fn-btn-ghost-plain:hover {
+  background-color: var(--fn-color-bg-muted);
+  color: var(--fn-color-body);
+}
+
+.fn-btn-icon {
+  padding: 0.5rem;
+  border-radius: var(--fn-radius);
+}
+
+/* Text label beside an icon inside a button */
+.fn-btn-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* --- Card --- */
+
+.fn-card {
+  background-color: var(--fn-color-bg-page);
+  border: 1px solid var(--fn-color-border);
+  border-radius: var(--fn-radius-lg);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-card {
+  background-color: var(--fn-color-surface-900);
+  border-color: var(--fn-color-surface-700);
+}
+
+/* --- Badges --- */
+
+.fn-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  border-radius: var(--fn-radius-full);
+  white-space: nowrap;
+}
+
+.fn-badge-primary {
+  background-color: oklch(from var(--fn-color-primary-500) l c h / 0.2);
+  color: var(--fn-color-primary-600);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-badge-primary {
+  color: var(--fn-color-primary-300);
+}
+
+.fn-badge-success {
+  background-color: oklch(from var(--fn-color-success-500) l c h / 0.2);
+  color: var(--fn-color-success-600);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-badge-success {
+  color: var(--fn-color-success-300);
+}
+
+.fn-badge-warning {
+  background-color: oklch(from var(--fn-color-warning-500) l c h / 0.2);
+  color: var(--fn-color-warning-600);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-badge-warning {
+  color: var(--fn-color-warning-300);
+}
+
+.fn-badge-error {
+  background-color: oklch(from var(--fn-color-error-500) l c h / 0.2);
+  color: var(--fn-color-error-600);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-badge-error {
+  color: var(--fn-color-error-300);
+}
+
+.fn-badge-surface {
+  background-color: oklch(from var(--fn-color-surface-500) l c h / 0.2);
+  color: var(--fn-color-surface-600);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-badge-surface {
+  color: var(--fn-color-surface-300);
+}
+
+.fn-badge-inactive {
+  background-color: oklch(from var(--fn-color-surface-500) l c h / 0.2);
+  color: var(--fn-color-surface-600);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-badge-inactive {
+  color: var(--fn-color-surface-400);
+}
+
+/* --- Form Components --- */
+
+.fn-input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--fn-color-body);
+  background-color: var(--fn-color-bg-page);
+  border: 1px solid var(--fn-color-border-strong);
+  border-radius: var(--fn-radius);
+  transition:
+    border-color 150ms,
+    box-shadow 150ms;
+}
+.fn-input:focus {
+  outline: 2px solid var(--fn-color-primary-500);
+  outline-offset: -1px;
+  border-color: var(--fn-color-primary-500);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-input {
+  background-color: var(--fn-color-surface-800);
+  border-color: var(--fn-color-surface-600);
+}
+
+.fn-input-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.fn-input-error {
+  background-color: oklch(from var(--fn-color-error-500) l c h / 0.1) !important;
+  border-color: var(--fn-color-error-500) !important;
+}
+
+.fn-select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 2.25rem 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--fn-color-body);
+  background-color: var(--fn-color-bg-page);
+  border: 1px solid var(--fn-color-border-strong);
+  border-radius: var(--fn-radius);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
+  appearance: none;
+}
+.fn-select:focus {
+  outline: 2px solid var(--fn-color-primary-500);
+  outline-offset: -1px;
+  border-color: var(--fn-color-primary-500);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-select {
+  background-color: var(--fn-color-surface-800);
+  border-color: var(--fn-color-surface-600);
+}
+
+.fn-textarea {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--fn-color-body);
+  background-color: var(--fn-color-bg-page);
+  border: 1px solid var(--fn-color-border-strong);
+  border-radius: var(--fn-radius);
+  resize: vertical;
+}
+.fn-textarea:focus {
+  outline: 2px solid var(--fn-color-primary-500);
+  outline-offset: -1px;
+  border-color: var(--fn-color-primary-500);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-textarea {
+  background-color: var(--fn-color-surface-800);
+  border-color: var(--fn-color-surface-600);
+}
+
+.fn-checkbox {
+  appearance: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 1px solid var(--fn-color-border-strong);
+  border-radius: var(--fn-radius-sm);
+  background-color: var(--fn-color-bg-page);
+  cursor: pointer;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.fn-checkbox:checked {
+  background-color: var(--fn-color-primary-500);
+  border-color: var(--fn-color-primary-500);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.fn-checkbox:focus {
+  outline: 2px solid var(--fn-color-primary-500);
+  outline-offset: 2px;
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-checkbox {
+  background-color: var(--fn-color-surface-800);
+  border-color: var(--fn-color-surface-600);
+}
+
+/* --- Alerts --- */
+
+.fn-alert {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--fn-radius-lg);
+  border: 1px solid;
+  font-size: 0.875rem;
+}
+
+.fn-alert-error {
+  background-color: oklch(from var(--fn-color-error-500) l c h / 0.1);
+  border-color: oklch(from var(--fn-color-error-500) l c h / 0.3);
+  color: var(--fn-color-error-700);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-alert-error {
+  color: var(--fn-color-error-300);
+}
+
+.fn-alert-warning {
+  background-color: oklch(from var(--fn-color-warning-500) l c h / 0.1);
+  border-color: oklch(from var(--fn-color-warning-500) l c h / 0.3);
+  color: var(--fn-color-warning-700);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-alert-warning {
+  color: var(--fn-color-warning-300);
+}
+
+.fn-alert-success {
+  background-color: oklch(from var(--fn-color-success-500) l c h / 0.1);
+  border-color: oklch(from var(--fn-color-success-500) l c h / 0.3);
+  color: var(--fn-color-success-700);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-alert-success {
+  color: var(--fn-color-success-300);
+}
+
+.fn-alert-info {
+  background-color: oklch(from var(--fn-color-secondary-500) l c h / 0.1);
+  border-color: oklch(from var(--fn-color-secondary-500) l c h / 0.3);
+  color: var(--fn-color-secondary-700);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-alert-info {
+  color: var(--fn-color-secondary-300);
+}
+
+/* --- Toggle (Switch) --- */
+
+.fn-toggle {
+  appearance: none;
+  position: relative;
+  width: 2.75rem;
+  height: 1.5rem;
+  border-radius: var(--fn-radius-full);
+  background-color: var(--fn-color-surface-300);
+  cursor: pointer;
+  transition: background-color 200ms;
+  flex-shrink: 0;
+}
+
+.fn-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background-color: var(--fn-color-on-solid);
+  transition: transform 200ms;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+
+.fn-toggle:checked {
+  background-color: var(--fn-color-primary-500);
+}
+
+.fn-toggle:checked::after {
+  transform: translateX(1.25rem);
+}
+
+.fn-toggle:focus {
+  outline: 2px solid var(--fn-color-primary-500);
+  outline-offset: 2px;
+}
+
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-toggle {
+  background-color: var(--fn-color-surface-600);
+}
+
+/* --- Range Slider --- */
+
+.fn-range-slider {
+  appearance: none;
+  width: 100%;
+  height: 0.375rem;
+  border-radius: var(--fn-radius-full);
+  background: var(--fn-color-surface-200);
+  outline: none;
+  cursor: pointer;
+}
+
+.fn-range-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: var(--fn-color-primary-500);
+  cursor: pointer;
+  border: 2px solid var(--fn-color-on-solid);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+}
+
+.fn-range-slider::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: var(--fn-color-primary-500);
+  cursor: pointer;
+  border: 2px solid var(--fn-color-on-solid);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+}
+
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-range-slider {
+  background: var(--fn-color-surface-700);
+}
+
+/* --- Chip --- */
+
+.fn-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--fn-radius-full);
+  background-color: var(--fn-color-bg-muted);
+  color: var(--fn-color-body-muted);
+  white-space: nowrap;
+}
+
+/* --- Code --- */
+
+.fn-code {
+  font-family: var(--fn-font-mono);
+  font-size: 0.8125em;
+  background-color: var(--fn-color-bg-muted);
+  padding: 0.125rem 0.375rem;
+  border-radius: var(--fn-radius-sm);
+  color: var(--fn-color-primary-600);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-code {
+  background-color: var(--fn-color-surface-800);
+  color: var(--fn-color-primary-300);
+}
+
+/* --- Kbd --- */
+
+.fn-kbd {
+  font-family: var(--fn-font-mono);
+  font-size: 0.75rem;
+  padding: 0.125rem 0.375rem;
+  border-radius: var(--fn-radius-sm);
+  border: 1px solid var(--fn-color-border-strong);
+  background-color: var(--fn-color-bg-surface);
+  box-shadow: 0 1px 0 var(--fn-color-border-strong);
+  color: var(--fn-color-body-muted);
+}
+
+/* --- Table --- */
+
+.fn-table-container {
+  overflow-x: auto;
+  border: 1px solid var(--fn-color-border);
+  border-radius: var(--fn-radius-lg);
+}
+
+.fn-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fn-table-container th {
+  padding: 0.625rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: left;
+  color: var(--fn-color-body-muted);
+  background-color: var(--fn-color-bg-surface);
+  border-bottom: 1px solid var(--fn-color-border);
+}
+
+.fn-table-container td {
+  padding: 0.625rem 0.75rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--fn-color-border);
+}
+
+.fn-table-container tr:last-child td {
+  border-bottom: none;
+}
+
+.fn-table-hover tbody tr:hover {
+  background-color: var(--fn-color-bg-muted);
+}
+
+/* --- Surface Variants --- */
+
+.fn-surface-filled {
+  background-color: var(--fn-color-surface-100);
+  color: var(--fn-color-body);
+}
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-surface-filled {
+  background-color: var(--fn-color-surface-800);
+}
+
+.fn-surface-soft {
+  background-color: oklch(from var(--fn-color-surface-500) l c h / 0.08);
+}
+

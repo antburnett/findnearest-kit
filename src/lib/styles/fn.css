@@ -1,0 +1,4 @@
+/* findnearest-kit base CSS in one import, for apps with no global rules of their own to interleave. */
+@import './fn-core.css';
+@import './fn-late.css';
+@import './fn-last.css';

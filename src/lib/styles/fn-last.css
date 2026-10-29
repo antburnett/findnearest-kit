@@ -1,0 +1,73 @@
+/* findnearest-kit: rules that must come last in the cascade. Import after everything else. */
+
+/* ==========================================================================
+   RESPONSIVE DISPLAY UTILITIES (kept last)
+   Re-declared at the end of the sheet so `fn-hidden` and the sm/md/lg
+   display switches beat component classes that set their own display
+   (`.fn-btn`, `.fn-admin-user`, ...). Same specificity, later wins.
+   ========================================================================== */
+
+.fn-hidden {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .fn-sm-block {
+    display: block;
+  }
+  .fn-sm-inline {
+    display: inline;
+  }
+  .fn-sm-inline-flex {
+    display: inline-flex;
+  }
+  .fn-sm-flex {
+    display: flex;
+  }
+  .fn-sm-hidden {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .fn-md-block {
+    display: block;
+  }
+  .fn-md-flex {
+    display: flex;
+  }
+  .fn-md-hidden {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fn-lg-block {
+    display: block;
+  }
+  .fn-lg-hidden {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   findnearest-kit components
+   Map the kit's --fnk-* properties onto the fn tokens. Declared on the
+   component root (not :root) so the dark-mode token overrides resolve there.
+   ========================================================================== */
+
+.fnk-geocoder {
+  --fnk-bg: var(--fn-color-bg-elevated);
+  --fnk-fg: var(--fn-color-body);
+  --fnk-muted: var(--fn-color-body-muted);
+  --fnk-border: var(--fn-color-border-strong);
+  --fnk-divider: var(--fn-color-border);
+  --fnk-hover: var(--fn-color-bg-muted);
+  --fnk-accent: var(--fn-color-primary-500);
+  --fnk-accent-soft: color-mix(in oklch, var(--fn-color-primary-500) 14%, transparent);
+  --fnk-chip-bg: var(--fn-color-bg-muted);
+  --fnk-error: var(--fn-color-error-600);
+  --fnk-radius: var(--fn-radius);
+  --fnk-ring: var(--fn-ring-primary);
+  --fnk-shadow: var(--fn-shadow-md);
+}

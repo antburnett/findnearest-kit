@@ -188,6 +188,9 @@
    2. DARK MODE OVERRIDES
    ========================================================================== */
 
+/* :root[data-mode] outranks :root above, so <html> itself (its background, color-scheme)
+   takes the dark values too; the :where() part reaches every element at zero specificity. */
+:root[data-mode='dark'],
 :where([data-mode='dark'], [data-mode='dark'] *) {
   --fn-color-body: var(--fn-color-surface-50);
   --fn-color-body-muted: var(--fn-color-surface-400);

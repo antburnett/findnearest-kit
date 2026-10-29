@@ -2,9 +2,9 @@
 
 Canonical instructions for all agents. `CLAUDE.md` imports this file; edit here, not there.
 
-Shared Svelte 5 UI components for FindNearest and the sites built on it (FindNearest Admin,
-ANTS, Shifter, Thematrix, public client sites). Workspace-wide rules live in
-`../AGENTS.md`; durable context in `~/brainz-vault/40-projects/findnearest/index.md`.
+Shared Svelte 5 UI for FindNearest and the apps built on it (FindNearest Admin, ANTS, Shifter,
+Thematrix, Centrelinker, Synker, public client sites): the base CSS every app imports, and the
+shared components. Workspace-wide rules live in `../AGENTS.md`.
 
 ## Rules
 
@@ -19,8 +19,16 @@ ANTS, Shifter, Thematrix, public client sites). Workspace-wide rules live in
   `package.json` plus a matching `vN.N.N` tag on the merged `main`.
 - **Components never import a map library or know a URL.** They take a function (e.g. a
   `SearchFn`) and emit plain results; the app decides what a pick does.
-- **Theme through `--fnk-*` custom properties** with Option A light fallbacks. No Tailwind, no
-  new runtime dependencies.
+- **No CSS framework.** Plain CSS and custom properties only, and no new runtime dependencies.
+- **Base CSS (`src/lib/styles/`):** `fn-core.css` (tokens, dark mode, base elements, prose,
+  `fn-*` utilities and components), `fn-late.css` (toast and the flat Option A overrides),
+  `fn-last.css` (rules that must win the cascade); `fn.css` imports all three. Every class is
+  `fn-` prefixed; never add an unprefixed class here (it would collide with an app's own).
+  Colours come from tokens: `--fn-color-*` (light values on `:root`, dark ones under
+  `[data-mode='dark']`) and the `--fn-tint-<hue>-{bg,border,text}` badge tints. Never a bare hex
+  in a rule. App-specific global rules stay in the app.
+- **Components theme through `--fnk-*` custom properties** with Option A light fallbacks;
+  `fn-last.css` maps them onto the `--fn-*` tokens.
 - `bun` only. Before finishing: `bun run check`, `bun test`, `bun run package`.
 
 ## Ports

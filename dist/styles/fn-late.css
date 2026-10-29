@@ -1,0 +1,569 @@
+/* findnearest-kit: toast, extra utilities and the flat "Option A" overrides.
+   Import after fn-core.css. */
+
+/* ==========================================================================
+   8. TOAST SYSTEM
+   ========================================================================== */
+
+.fn-toast-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 24rem;
+  pointer-events: none;
+}
+
+.fn-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--fn-radius-lg);
+  border: 1px solid;
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  pointer-events: auto;
+  animation: fn-toast-in 300ms ease-out forwards;
+  /* Solid: the type's tint is a background-image over this, so the page never shows through */
+  background-color: var(--fn-color-bg-page);
+}
+
+.fn-toast-exiting {
+  animation: fn-toast-out 200ms ease-in forwards;
+}
+
+.fn-toast-success {
+  border-color: oklch(from var(--fn-color-success-500) l c h / 0.3);
+  background-image: linear-gradient(
+    oklch(from var(--fn-color-success-500) l c h / 0.08),
+    oklch(from var(--fn-color-success-500) l c h / 0.08)
+  );
+}
+
+.fn-toast-error {
+  border-color: oklch(from var(--fn-color-error-500) l c h / 0.3);
+  background-image: linear-gradient(
+    oklch(from var(--fn-color-error-500) l c h / 0.08),
+    oklch(from var(--fn-color-error-500) l c h / 0.08)
+  );
+}
+
+.fn-toast-warning {
+  border-color: oklch(from var(--fn-color-warning-500) l c h / 0.3);
+  background-image: linear-gradient(
+    oklch(from var(--fn-color-warning-500) l c h / 0.08),
+    oklch(from var(--fn-color-warning-500) l c h / 0.08)
+  );
+}
+
+.fn-toast-info {
+  border-color: oklch(from var(--fn-color-secondary-500) l c h / 0.3);
+  background-image: linear-gradient(
+    oklch(from var(--fn-color-secondary-500) l c h / 0.08),
+    oklch(from var(--fn-color-secondary-500) l c h / 0.08)
+  );
+}
+
+.fn-toast-message {
+  flex: 1;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.fn-toast-title {
+  font-weight: 600;
+  margin-bottom: 0.125rem;
+}
+
+.fn-toast-close {
+  flex-shrink: 0;
+  padding: 0.125rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--fn-color-body-muted);
+  border-radius: var(--fn-radius-sm);
+}
+
+.fn-toast-close:hover {
+  background-color: var(--fn-color-bg-muted);
+  color: var(--fn-color-body);
+}
+
+@keyframes fn-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fn-toast-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.95);
+  }
+}
+
+/* ==========================================================================
+   ADDITIONAL UTILITIES
+   ========================================================================== */
+.fn-max-h-90vh {
+  max-height: 90vh;
+}
+.fn-shadow-sm {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+.fn-border-success-30 {
+  border-color: oklch(86% 0.1 126.06deg / 30%);
+}
+/* ==========================================================================
+   OPTION A — flat utility overrides
+   Shared design language with SXC / Slotterz: system font, slate greys,
+   blue interactive accent, 4–6px radii, 32px controls, flat surfaces.
+   The FindNearest crimson lives in the admin header only (brand-* tokens).
+   No gradients, no glass, no coloured drop shadows.
+   ========================================================================== */
+
+
+html {
+  color-scheme: light;
+  background-color: var(--fn-color-bg-surface);
+}
+
+/* html[...], not :where(): a zero-specificity selector lost to the html rule above, so native
+   controls (time/date pickers, scrollbars) stayed in the light scheme on the dark theme. */
+html[data-mode='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--fn-color-bg-surface);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: oklch(from var(--fn-color-primary-500) l c h / 0.2);
+}
+
+/* --- Buttons: flat, 32px, 4px radius --- */
+
+.fn-btn {
+  gap: 0.375rem;
+  min-height: var(--fn-control-height);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  border-radius: var(--fn-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color 120ms var(--fn-ease-standard),
+    border-color 120ms var(--fn-ease-standard),
+    color 120ms var(--fn-ease-standard);
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: none;
+  transform: none;
+}
+
+.fn-btn:hover,
+.fn-btn:active {
+  text-decoration: none;
+  transform: none;
+}
+
+.fn-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--fn-ring-primary);
+}
+
+.fn-btn.fn-justify-start {
+  justify-content: flex-start;
+}
+
+.fn-btn-sm {
+  min-height: var(--fn-control-height-sm);
+  padding: 0.125rem 0.625rem;
+  font-size: 0.75rem;
+  border-radius: var(--fn-radius);
+}
+
+.fn-btn-lg {
+  min-height: var(--fn-control-height-lg);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: var(--fn-radius);
+}
+
+.fn-btn-icon {
+  min-width: var(--fn-control-height);
+  padding: 0.25rem;
+}
+
+/* Borderless icon-only button: the "simple" affordance for inline actions
+   like a row's view/cancel icon — compact hit area, hover tint, no box. */
+.fn-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  background: transparent;
+  border: 0;
+  border-radius: var(--fn-radius-sm);
+  color: var(--fn-color-body-muted);
+  cursor: pointer;
+  transition:
+    color 120ms var(--fn-ease-standard),
+    background-color 120ms var(--fn-ease-standard);
+}
+
+.fn-icon-btn:hover {
+  color: var(--fn-color-primary-600);
+  background: var(--fn-color-bg-muted);
+}
+
+.fn-icon-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--fn-ring-primary);
+}
+
+.fn-icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fn-btn-primary {
+  background: var(--fn-color-primary-600);
+  color: var(--fn-color-on-solid);
+  font-weight: 600;
+  box-shadow: none;
+}
+.fn-btn-primary:hover {
+  background: var(--fn-color-primary-700);
+  box-shadow: none;
+}
+
+.fn-btn-error {
+  background: var(--fn-color-error-600);
+  color: var(--fn-color-on-solid);
+  box-shadow: none;
+}
+.fn-btn-error:hover {
+  background: var(--fn-color-error-700);
+}
+
+.fn-btn-success {
+  background: var(--fn-color-success-600);
+  color: var(--fn-color-on-solid);
+  box-shadow: none;
+}
+.fn-btn-success:hover {
+  background: var(--fn-color-success-700);
+}
+
+.fn-btn-warning {
+  background: var(--fn-color-warning-600);
+  color: var(--fn-color-on-solid);
+  box-shadow: none;
+}
+.fn-btn-warning:hover {
+  background: var(--fn-color-warning-700);
+}
+
+.fn-btn-surface,
+.fn-btn-ghost,
+.fn-btn-outlined {
+  background-color: var(--fn-color-bg-page);
+  color: var(--fn-color-body);
+  border-color: var(--fn-color-border-strong);
+}
+
+.fn-btn-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--fn-color-body-muted);
+}
+
+.fn-btn-surface:hover,
+.fn-btn-ghost:hover,
+.fn-btn-outlined:hover {
+  background-color: var(--fn-color-bg-muted);
+  color: var(--fn-color-body);
+  box-shadow: none;
+}
+
+.fn-btn-ghost-primary,
+.fn-btn-ghost-error,
+.fn-btn-ghost-success,
+.fn-btn-ghost-warning {
+  border-color: transparent;
+}
+
+.fn-btn-ghost-primary:hover,
+.fn-btn-ghost-error:hover,
+.fn-btn-ghost-success:hover,
+.fn-btn-ghost-warning:hover {
+  box-shadow: none;
+}
+
+/* --- Surfaces --- */
+
+.fn-card {
+  background: var(--fn-color-bg-page);
+  border: 1px solid var(--fn-color-border);
+  border-radius: var(--fn-radius-md);
+  box-shadow: none;
+}
+
+/* Keep dropdowns inside a card above later sibling cards. */
+.fn-card:has(.fn-absolute.fn-z-50) {
+  position: relative;
+  z-index: 30;
+}
+
+/* --- Inputs: 32px, flat --- */
+
+.fn-input,
+.fn-select,
+.fn-textarea,
+input[type='text'],
+input[type='email'],
+input[type='url'],
+input[type='password'],
+input[type='number'],
+input[type='date'],
+input[type='datetime-local'],
+input[type='month'],
+input[type='search'],
+input[type='tel'],
+input[type='time'],
+input[type='week'],
+textarea,
+select {
+  min-height: var(--fn-control-height);
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  background-color: var(--fn-color-bg-page);
+  border-radius: var(--fn-radius);
+  box-shadow: none;
+  transition:
+    border-color 120ms var(--fn-ease-standard),
+    box-shadow 120ms var(--fn-ease-standard);
+}
+
+textarea,
+.fn-textarea {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.fn-input:hover,
+.fn-select:hover,
+.fn-textarea:hover,
+input:not([type='checkbox']):not([type='radio']):hover,
+textarea:hover,
+select:hover {
+  border-color: var(--fn-color-surface-400);
+}
+
+.fn-input:focus,
+.fn-select:focus,
+.fn-textarea:focus,
+input:not([type='checkbox']):not([type='radio']):focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--fn-color-primary-500);
+  box-shadow: var(--fn-ring-primary);
+}
+
+/* Invalid state from integrated form validation ($lib/form-validation.ts);
+   :is() carries enough specificity to beat the hover/focus rules above */
+:is(input:not([type='checkbox']):not([type='radio']), select, textarea)[aria-invalid='true'],
+:is(input:not([type='checkbox']):not([type='radio']), select, textarea)[aria-invalid='true']:hover {
+  border-color: var(--fn-color-error-500);
+}
+:is(input:not([type='checkbox']):not([type='radio']), select, textarea)[aria-invalid='true']:focus {
+  border-color: var(--fn-color-error-500);
+  box-shadow: 0 0 0 3px oklch(from var(--fn-color-error-500) l c h / 0.25);
+}
+
+.fn-checkbox {
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: var(--fn-radius-sm);
+}
+.fn-checkbox:focus {
+  outline: none;
+  box-shadow: var(--fn-ring-primary);
+}
+
+.fn-alert {
+  align-items: flex-start;
+  border-radius: var(--fn-radius-md);
+  box-shadow: none;
+}
+
+.fn-alert-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* --- Tables: 36px rows --- */
+
+.fn-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.fn-table thead th {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fn-color-body-muted);
+  background-color: var(--fn-color-bg-surface);
+  border-bottom: 1px solid var(--fn-color-border);
+  white-space: nowrap;
+}
+
+.fn-table tbody td {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  border-bottom: 1px solid var(--fn-color-divide);
+  vertical-align: middle;
+}
+
+.fn-table tbody tr {
+  transition: background-color 120ms var(--fn-ease-standard);
+}
+
+.fn-table tbody tr:nth-child(even) {
+  background-color: transparent;
+}
+
+.fn-table tbody tr:hover {
+  background-color: var(--fn-color-bg-surface);
+}
+
+.fn-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.fn-table-container {
+  background: var(--fn-color-bg-page);
+  border-radius: var(--fn-radius-md);
+  box-shadow: none;
+}
+
+.fn-surface-filled {
+  background-color: var(--fn-color-bg-page);
+}
+
+.fn-surface-soft {
+  background-color: var(--fn-color-bg-surface);
+}
+
+.fn-animate-spin {
+  animation: fn-spin 1s linear infinite;
+}
+
+.fn-size-3\.5 {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+@media (max-width: 639px) {
+
+  .fn-card.fn-p-6 {
+    padding: 0.875rem;
+  }
+
+  .fn-tabs {
+    padding: 0 0.5rem;
+  }
+
+  .fn-tab {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Page action bar: phones only. The page's primary action (Create, Save)
+   lives here below sm and in the page header above it, so it stays under the
+   thumb rather than the top-right corner. Pair with .fn-has-action-bar on the
+   scrolling container. */
+.fn-action-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+  background: var(--fn-color-bg-page);
+  border-top: 1px solid var(--fn-color-border);
+  box-shadow: var(--fn-shadow-lg);
+  transition: transform 200ms var(--fn-ease-standard);
+}
+
+/* Slid off while the page scrolls down (hideOnScroll), so it never sits on the row you're
+   scrolling to; back on any scroll up and at the end of the page. +1rem clears the shadow. */
+.fn-action-bar.is-scrolled-away {
+  transform: translateY(calc(100% + 1rem));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fn-action-bar {
+    transition: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .fn-action-bar {
+    display: none;
+  }
+}
+
+/* --- iOS zoom prevention ---
+   iOS Safari zooms the whole page into any field under 16px when it takes focus, and leaves it
+   zoomed: the field grows past the screen edge and takes its clear (X) button with it. Inputs
+   are 14px here, so on a phone or any touch screen they go to 16px (the SXC/Slotterz rule).
+   !important because component styles size their own inputs. */
+@media (max-width: 767px), (pointer: coarse) {
+  input:not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='color'],
+    [type='file'],
+    [type='button'],
+    [type='submit'],
+    [type='reset'],
+    [type='image']
+  ),
+  select,
+  textarea {
+    font-size: 1rem !important;
+  }
+}

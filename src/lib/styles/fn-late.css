@@ -340,6 +340,7 @@ body {
 .fn-input,
 .fn-select,
 .fn-textarea,
+input:not([type]),
 input[type='text'],
 input[type='email'],
 input[type='url'],

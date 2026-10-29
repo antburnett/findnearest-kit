@@ -292,6 +292,7 @@ dd {
 
 /* --- Form Element Resets --- */
 
+input:not([type]),
 input[type='text'],
 input[type='email'],
 input[type='url'],
@@ -316,6 +317,7 @@ select {
   color: var(--fn-color-body);
 }
 
+input:not([type]):focus,
 input[type='text']:focus,
 input[type='email']:focus,
 input[type='url']:focus,

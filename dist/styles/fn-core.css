@@ -129,28 +129,36 @@
   --fn-color-link-strong: var(--fn-color-primary-700);
   --fn-color-on-solid: #ffffff; /* text on a solid hue or bg-inverse */
 
-  /* --- Tints: pastel badge / callout = tint bg + tint border + tint text --- */
-  --fn-tint-primary-bg: var(--fn-color-primary-100);
-  --fn-tint-primary-border: var(--fn-color-primary-200);
-  --fn-tint-primary-text: var(--fn-color-primary-700);
-  --fn-tint-success-bg: var(--fn-color-success-100);
-  --fn-tint-success-border: var(--fn-color-success-200);
-  --fn-tint-success-text: var(--fn-color-success-700);
-  --fn-tint-warning-bg: var(--fn-color-warning-100);
-  --fn-tint-warning-border: var(--fn-color-warning-200);
-  --fn-tint-warning-text: var(--fn-color-warning-700);
-  --fn-tint-error-bg: var(--fn-color-error-100);
-  --fn-tint-error-border: var(--fn-color-error-200);
-  --fn-tint-error-text: var(--fn-color-error-700);
-  --fn-tint-tertiary-bg: var(--fn-color-tertiary-100);
-  --fn-tint-tertiary-border: var(--fn-color-tertiary-200);
-  --fn-tint-tertiary-text: var(--fn-color-tertiary-700);
+  /* --- Tints: highlighted row = bg-soft; badge / callout = bg + border + text --- */
+  --fn-tint-primary-bg-soft: #eff6ff;
+  --fn-tint-primary-bg: #dbeafe;
+  --fn-tint-primary-border: #bfdbfe;
+  --fn-tint-primary-text: #1d4ed8;
+  --fn-tint-success-bg-soft: #f0fdf4;
+  --fn-tint-success-bg: #dcfce7;
+  --fn-tint-success-border: #bbf7d0;
+  --fn-tint-success-text: #15803d;
+  --fn-tint-warning-bg-soft: #fffbeb;
+  --fn-tint-warning-bg: #fef3c7;
+  --fn-tint-warning-border: #fde68a;
+  --fn-tint-warning-text: #b45309;
+  --fn-tint-error-bg-soft: #fef2f2;
+  --fn-tint-error-bg: #fee2e2;
+  --fn-tint-error-border: #fecaca;
+  --fn-tint-error-text: #b91c1c;
+  --fn-tint-tertiary-bg-soft: #f5f3ff;
+  --fn-tint-tertiary-bg: #ede9fe;
+  --fn-tint-tertiary-border: #ddd6fe;
+  --fn-tint-tertiary-text: #6d28d9;
+  --fn-tint-orange-bg-soft: #fff7ed;
   --fn-tint-orange-bg: #ffedd5;
   --fn-tint-orange-border: #fed7aa;
   --fn-tint-orange-text: #c2410c;
+  --fn-tint-fuchsia-bg-soft: #fdf4ff;
   --fn-tint-fuchsia-bg: #fae8ff;
   --fn-tint-fuchsia-border: #f5d0fe;
   --fn-tint-fuchsia-text: #a21caf;
+  --fn-tint-teal-bg-soft: #f0fdfa;
   --fn-tint-teal-bg: #ccfbf1;
   --fn-tint-teal-border: #99f6e4;
   --fn-tint-teal-text: #0f766e;
@@ -188,6 +196,9 @@
    2. DARK MODE OVERRIDES
    ========================================================================== */
 
+/* :root[data-mode] outranks :root above, so <html> itself (its background, color-scheme)
+   takes the dark values too; the :where() part reaches every element at zero specificity. */
+:root[data-mode='dark'],
 :where([data-mode='dark'], [data-mode='dark'] *) {
   --fn-color-body: var(--fn-color-surface-50);
   --fn-color-body-muted: var(--fn-color-surface-400);
@@ -205,28 +216,36 @@
   --fn-color-divide: var(--fn-color-surface-800);
   --fn-color-link: var(--fn-color-primary-400);
   --fn-color-link-strong: var(--fn-color-primary-300);
-  --fn-tint-primary-bg: color-mix(in oklch, var(--fn-color-primary-500) 15%, transparent);
-  --fn-tint-primary-border: color-mix(in oklch, var(--fn-color-primary-500) 40%, transparent);
-  --fn-tint-primary-text: var(--fn-color-primary-300);
-  --fn-tint-success-bg: color-mix(in oklch, var(--fn-color-success-500) 15%, transparent);
-  --fn-tint-success-border: color-mix(in oklch, var(--fn-color-success-500) 40%, transparent);
-  --fn-tint-success-text: var(--fn-color-success-300);
-  --fn-tint-warning-bg: color-mix(in oklch, var(--fn-color-warning-500) 15%, transparent);
-  --fn-tint-warning-border: color-mix(in oklch, var(--fn-color-warning-500) 40%, transparent);
-  --fn-tint-warning-text: var(--fn-color-warning-300);
-  --fn-tint-error-bg: color-mix(in oklch, var(--fn-color-error-500) 15%, transparent);
-  --fn-tint-error-border: color-mix(in oklch, var(--fn-color-error-500) 40%, transparent);
-  --fn-tint-error-text: var(--fn-color-error-300);
-  --fn-tint-tertiary-bg: color-mix(in oklch, var(--fn-color-tertiary-500) 15%, transparent);
-  --fn-tint-tertiary-border: color-mix(in oklch, var(--fn-color-tertiary-500) 40%, transparent);
-  --fn-tint-tertiary-text: var(--fn-color-tertiary-300);
-  --fn-tint-orange-bg: color-mix(in oklch, #f97316 15%, transparent);
+  --fn-tint-primary-bg-soft: color-mix(in oklch, #3b82f6 12%, transparent);
+  --fn-tint-primary-bg: color-mix(in oklch, #3b82f6 18%, transparent);
+  --fn-tint-primary-border: color-mix(in oklch, #3b82f6 40%, transparent);
+  --fn-tint-primary-text: #93c5fd;
+  --fn-tint-success-bg-soft: color-mix(in oklch, #22c55e 12%, transparent);
+  --fn-tint-success-bg: color-mix(in oklch, #22c55e 18%, transparent);
+  --fn-tint-success-border: color-mix(in oklch, #22c55e 40%, transparent);
+  --fn-tint-success-text: #86efac;
+  --fn-tint-warning-bg-soft: color-mix(in oklch, #f59e0b 12%, transparent);
+  --fn-tint-warning-bg: color-mix(in oklch, #f59e0b 18%, transparent);
+  --fn-tint-warning-border: color-mix(in oklch, #f59e0b 40%, transparent);
+  --fn-tint-warning-text: #fcd34d;
+  --fn-tint-error-bg-soft: color-mix(in oklch, #ef4444 12%, transparent);
+  --fn-tint-error-bg: color-mix(in oklch, #ef4444 18%, transparent);
+  --fn-tint-error-border: color-mix(in oklch, #ef4444 40%, transparent);
+  --fn-tint-error-text: #fca5a5;
+  --fn-tint-tertiary-bg-soft: color-mix(in oklch, #8b5cf6 12%, transparent);
+  --fn-tint-tertiary-bg: color-mix(in oklch, #8b5cf6 18%, transparent);
+  --fn-tint-tertiary-border: color-mix(in oklch, #8b5cf6 40%, transparent);
+  --fn-tint-tertiary-text: #c4b5fd;
+  --fn-tint-orange-bg-soft: color-mix(in oklch, #f97316 12%, transparent);
+  --fn-tint-orange-bg: color-mix(in oklch, #f97316 18%, transparent);
   --fn-tint-orange-border: color-mix(in oklch, #f97316 40%, transparent);
   --fn-tint-orange-text: #fdba74;
-  --fn-tint-fuchsia-bg: color-mix(in oklch, #d946ef 15%, transparent);
+  --fn-tint-fuchsia-bg-soft: color-mix(in oklch, #d946ef 12%, transparent);
+  --fn-tint-fuchsia-bg: color-mix(in oklch, #d946ef 18%, transparent);
   --fn-tint-fuchsia-border: color-mix(in oklch, #d946ef 40%, transparent);
   --fn-tint-fuchsia-text: #f0abfc;
-  --fn-tint-teal-bg: color-mix(in oklch, #14b8a6 15%, transparent);
+  --fn-tint-teal-bg-soft: color-mix(in oklch, #14b8a6 12%, transparent);
+  --fn-tint-teal-bg: color-mix(in oklch, #14b8a6 18%, transparent);
   --fn-tint-teal-border: color-mix(in oklch, #14b8a6 40%, transparent);
   --fn-tint-teal-text: #5eead4;
   --fn-shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);

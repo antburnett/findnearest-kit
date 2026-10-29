@@ -13,7 +13,7 @@ Shared FindNearest UI for Svelte 5 apps:
 Installed from GitHub at a tag (not published to npm):
 
 ```bash
-bun add github:antburnett/findnearest-kit#v0.2.0
+bun add github:antburnett/findnearest-kit#v0.2.1
 ```
 
 Requires `svelte` 5.20 or later. Upgrading means bumping the tag.
@@ -50,7 +50,8 @@ or the system setting). Every token switches; `color-scheme` follows.
 | `--fn-color-border`, `-border-strong`, `-border-focus`, `-divide` | lines |
 | `--fn-color-link`, `-link-strong` | links |
 | `--fn-color-{primary,secondary,tertiary,success,warning,error,surface}-{50…950}` | the scales |
-| `--fn-tint-{primary,success,warning,error,tertiary,orange,fuchsia,teal}-{bg,border,text}` | pastel badges and callouts |
+| `--fn-tint-{primary,success,warning,error,tertiary,orange,fuchsia,teal}-bg-soft` | a highlighted row or section |
+| `--fn-tint-<hue>-{bg,border,text}` | pastel badges and callouts |
 
 ## Use GeocoderSearch
 

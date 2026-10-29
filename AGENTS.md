@@ -25,7 +25,7 @@ shared components. Workspace-wide rules live in `../AGENTS.md`.
   `fn-last.css` (rules that must win the cascade); `fn.css` imports all three. Every class is
   `fn-` prefixed; never add an unprefixed class here (it would collide with an app's own).
   Colours come from tokens: `--fn-color-*` (light values on `:root`, dark ones under
-  `[data-mode='dark']`) and the `--fn-tint-<hue>-{bg,border,text}` badge tints. Never a bare hex
+  `[data-mode='dark']`) and the `--fn-tint-<hue>-{bg-soft,bg,border,text}` tints. Never a bare hex
   in a rule. App-specific global rules stay in the app.
 - **Components theme through `--fnk-*` custom properties** with Option A light fallbacks;
   `fn-last.css` maps them onto the `--fn-*` tokens.

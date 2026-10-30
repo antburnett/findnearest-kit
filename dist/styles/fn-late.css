@@ -267,21 +267,21 @@ body {
 }
 
 .fn-btn-success {
-  background: var(--fn-color-success-600);
+  background: var(--fn-color-success-700); /* white on 600 was 4.3:1 */
   color: var(--fn-color-on-solid);
   box-shadow: none;
 }
 .fn-btn-success:hover {
-  background: var(--fn-color-success-700);
+  background: var(--fn-color-success-800);
 }
 
 .fn-btn-warning {
-  background: var(--fn-color-warning-600);
+  background: var(--fn-color-warning-700); /* white on 600 was 4.1:1 */
   color: var(--fn-color-on-solid);
   box-shadow: none;
 }
 .fn-btn-warning:hover {
-  background: var(--fn-color-warning-700);
+  background: var(--fn-color-warning-800);
 }
 
 .fn-btn-surface,
@@ -378,7 +378,7 @@ textarea,
 input:not([type='checkbox']):not([type='radio']):hover,
 textarea:hover,
 select:hover {
-  border-color: var(--fn-color-surface-400);
+  border-color: var(--fn-color-border-hover);
 }
 
 .fn-input:focus,

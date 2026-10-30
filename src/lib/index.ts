@@ -1,3 +1,4 @@
+export { default as UpdateBanner } from './update/UpdateBanner.svelte';
 export { default as GeocoderSearch } from './geocoder/GeocoderSearch.svelte';
 export {
 	geocoderSearch,

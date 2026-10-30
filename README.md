@@ -7,13 +7,15 @@ Shared FindNearest UI for Svelte 5 apps:
 - **`GeocoderSearch`**: the place search box for the FindNearest geocoder, used by FindNearest
   Admin, ANTS, Shifter, Thematrix and the public client sites instead of each keeping its own
   copy.
+- **`UpdateBanner`**: the "new version available" prompt every SvelteKit app shows when a new
+  build is deployed.
 
 ## Install
 
 Installed from GitHub at a tag (not published to npm):
 
 ```bash
-bun add github:antburnett/findnearest-kit#v0.2.3
+bun add github:antburnett/findnearest-kit#v0.2.4
 ```
 
 Requires `svelte` 5.20 or later. Upgrading means bumping the tag.
@@ -53,6 +55,31 @@ or the system setting). Every token switches; `color-scheme` follows.
 | `--fn-color-{primary,secondary,tertiary,success,warning,error,surface}-{50…950}` | the scales |
 | `--fn-tint-{primary,success,warning,error,tertiary,orange,fuchsia,teal}-bg-soft` | a highlighted row or section |
 | `--fn-tint-<hue>-{bg,border,text}` | pastel badges and callouts |
+
+## Use UpdateBanner
+
+```svelte
+<!-- root +layout.svelte, once -->
+<script lang="ts">
+	import { UpdateBanner } from 'findnearest-kit';
+</script>
+
+<UpdateBanner appName="Centrelinker" />
+```
+
+with SvelteKit polling for new builds in `svelte.config.js`:
+
+```js
+kit: { version: { pollInterval: 60_000 } }
+```
+
+When the poll sees a newer build, a dark pill appears at the bottom centre: "A new version of
+{appName} is available", a Reload button and a dismiss button. It never reloads by itself, so
+nobody loses a half-finished edit. In dev the build version never changes, so it never shows.
+
+- Needs SvelteKit 2.12 or later (`$app/state`) and the base CSS: its colours are the kit tokens
+  (`bg-inverse`, `on-solid`, `primary-600`, `warning-300`), so it follows dark mode.
+- `show` forces it on or off, for demos and tests (`bun run dev`, then `/update-banner`).
 
 ## Use GeocoderSearch
 

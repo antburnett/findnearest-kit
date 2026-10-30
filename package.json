@@ -1,6 +1,6 @@
 {
   "name": "findnearest-kit",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "type": "module",
   "description": "Shared FindNearest UI for Svelte 5 apps: the base CSS (tokens, dark mode, fn-* classes) and components (geocoder search first).",
@@ -31,7 +31,13 @@
     "**/*.css"
   ],
   "peerDependencies": {
+    "@sveltejs/kit": "^2.12.0",
     "svelte": "^5.20.0"
+  },
+  "peerDependenciesMeta": {
+    "@sveltejs/kit": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@sveltejs/kit": "^2.70.3",

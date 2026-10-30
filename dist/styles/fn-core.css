@@ -113,7 +113,7 @@
   /* --- Semantic Tokens (Light Mode) --- */
   --fn-color-body: var(--fn-color-surface-950);
   --fn-color-body-muted: var(--fn-color-surface-600);
-  --fn-color-body-faint: var(--fn-color-surface-400);
+  --fn-color-body-faint: var(--fn-color-surface-500); /* 4.8:1 on bg-page */
   --fn-color-bg-page: #ffffff; /* cards, panels, inputs */
   --fn-color-bg-surface: var(--fn-color-surface-50); /* the page behind them */
   --fn-color-bg-muted: var(--fn-color-surface-100);
@@ -122,7 +122,9 @@
   --fn-color-bg-overlay: #ffffff;
   --fn-color-bg-inverse: var(--fn-color-surface-900); /* dark chip with on-solid text */
   --fn-color-border: var(--fn-color-surface-200);
-  --fn-color-border-strong: var(--fn-color-surface-300);
+  --fn-color-border-strong: #7e8ea4; /* control borders: 3.3:1 on bg-page, the 3:1 a control edge needs */
+  --fn-color-border-hover: var(--fn-color-surface-500);
+  --fn-color-placeholder: var(--fn-color-surface-500);
   --fn-color-border-focus: var(--fn-color-primary-600);
   --fn-color-divide: var(--fn-color-surface-100);
   --fn-color-link: var(--fn-color-primary-600);
@@ -202,7 +204,7 @@
 :where([data-mode='dark'], [data-mode='dark'] *) {
   --fn-color-body: var(--fn-color-surface-50);
   --fn-color-body-muted: var(--fn-color-surface-400);
-  --fn-color-body-faint: var(--fn-color-surface-500);
+  --fn-color-body-faint: #77879d; /* 4.9:1 on bg-page; surface-500 was 3.7:1 */
   --fn-color-bg-page: var(--fn-color-surface-900);
   --fn-color-bg-surface: var(--fn-color-surface-950);
   --fn-color-bg-muted: var(--fn-color-surface-800);
@@ -211,7 +213,9 @@
   --fn-color-bg-overlay: var(--fn-color-surface-900);
   --fn-color-bg-inverse: var(--fn-color-surface-600);
   --fn-color-border: var(--fn-color-surface-700);
-  --fn-color-border-strong: var(--fn-color-surface-600);
+  --fn-color-border-strong: #697990; /* 3.3:1 on surface-800, 4:1 on bg-page */
+  --fn-color-border-hover: var(--fn-color-surface-400);
+  --fn-color-placeholder: var(--fn-color-surface-400);
   --fn-color-border-focus: var(--fn-color-primary-500);
   --fn-color-divide: var(--fn-color-surface-800);
   --fn-color-link: var(--fn-color-primary-400);
@@ -433,7 +437,7 @@ h6 {
 
 /* --- Links --- */
 a {
-  color: var(--fn-color-primary-500);
+  color: var(--fn-color-link);
   text-decoration: none;
 }
 a:hover {
@@ -442,14 +446,10 @@ a:hover {
 
 /* --- Placeholder --- */
 ::placeholder {
-  color: var(--fn-color-surface-300);
+  color: var(--fn-color-placeholder);
   opacity: 1;
 }
 
-:where([data-mode='dark'], [data-mode='dark'] *) ::placeholder {
-  color: var(--fn-color-surface-600);
-  opacity: 1;
-}
 
 /* --- Images --- */
 img,
@@ -510,7 +510,7 @@ table {
 }
 
 .fn-prose a {
-  color: var(--fn-color-primary-500);
+  color: var(--fn-color-link);
   text-decoration: underline;
   font-weight: 500;
 }
@@ -2430,7 +2430,7 @@ table {
 
 .fn-btn-ghost-primary {
   background-color: transparent;
-  color: var(--fn-color-primary-500);
+  color: var(--fn-color-primary-600);
 }
 .fn-btn-ghost-primary:hover {
   background-color: oklch(from var(--fn-color-primary-500) l c h / 0.1);
@@ -2446,7 +2446,7 @@ table {
 
 .fn-btn-ghost-success {
   background-color: transparent;
-  color: var(--fn-color-success-500);
+  color: var(--fn-color-success-700);
 }
 .fn-btn-ghost-success:hover {
   background-color: oklch(from var(--fn-color-success-500) l c h / 0.1);
@@ -2454,7 +2454,7 @@ table {
 
 .fn-btn-ghost-warning {
   background-color: transparent;
-  color: var(--fn-color-warning-500);
+  color: var(--fn-color-warning-700);
 }
 .fn-btn-ghost-warning:hover {
   background-color: oklch(from var(--fn-color-warning-500) l c h / 0.1);
@@ -2467,6 +2467,22 @@ table {
 }
 .fn-btn-outlined-error:hover {
   background-color: oklch(from var(--fn-color-error-500) l c h / 0.1);
+}
+
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-btn-ghost-primary {
+  color: var(--fn-color-primary-400);
+}
+
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-btn-ghost-success {
+  color: var(--fn-color-success-400);
+}
+
+:where([data-mode='dark'], [data-mode='dark'] *) .fn-btn-ghost-warning {
+  color: var(--fn-color-warning-400);
+}
+
+:where([data-mode='dark'], [data-mode='dark'] *) :is(.fn-btn-ghost-error, .fn-btn-outlined-error) {
+  color: var(--fn-color-error-300);
 }
 
 .fn-btn-outlined {
@@ -2528,7 +2544,7 @@ table {
 
 .fn-badge-primary {
   background-color: oklch(from var(--fn-color-primary-500) l c h / 0.2);
-  color: var(--fn-color-primary-600);
+  color: var(--fn-color-primary-700);
 }
 :where([data-mode='dark'], [data-mode='dark'] *) .fn-badge-primary {
   color: var(--fn-color-primary-300);
@@ -2536,7 +2552,7 @@ table {
 
 .fn-badge-success {
   background-color: oklch(from var(--fn-color-success-500) l c h / 0.2);
-  color: var(--fn-color-success-600);
+  color: var(--fn-color-success-800);
 }
 :where([data-mode='dark'], [data-mode='dark'] *) .fn-badge-success {
   color: var(--fn-color-success-300);
@@ -2544,7 +2560,7 @@ table {
 
 .fn-badge-warning {
   background-color: oklch(from var(--fn-color-warning-500) l c h / 0.2);
-  color: var(--fn-color-warning-600);
+  color: var(--fn-color-warning-800);
 }
 :where([data-mode='dark'], [data-mode='dark'] *) .fn-badge-warning {
   color: var(--fn-color-warning-300);
@@ -2597,7 +2613,7 @@ table {
 }
 :where([data-mode='dark'], [data-mode='dark'] *) .fn-input {
   background-color: var(--fn-color-surface-800);
-  border-color: var(--fn-color-surface-600);
+  border-color: var(--fn-color-border-strong);
 }
 
 .fn-input-sm {
@@ -2633,7 +2649,7 @@ table {
 }
 :where([data-mode='dark'], [data-mode='dark'] *) .fn-select {
   background-color: var(--fn-color-surface-800);
-  border-color: var(--fn-color-surface-600);
+  border-color: var(--fn-color-border-strong);
 }
 
 .fn-textarea {
@@ -2655,7 +2671,7 @@ table {
 }
 :where([data-mode='dark'], [data-mode='dark'] *) .fn-textarea {
   background-color: var(--fn-color-surface-800);
-  border-color: var(--fn-color-surface-600);
+  border-color: var(--fn-color-border-strong);
 }
 
 .fn-checkbox {
@@ -2683,7 +2699,7 @@ table {
 }
 :where([data-mode='dark'], [data-mode='dark'] *) .fn-checkbox {
   background-color: var(--fn-color-surface-800);
-  border-color: var(--fn-color-surface-600);
+  border-color: var(--fn-color-border-strong);
 }
 
 /* --- Alerts --- */

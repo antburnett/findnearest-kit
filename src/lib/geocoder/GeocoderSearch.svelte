@@ -329,7 +329,7 @@
 		--_bg: var(--fnk-bg, #fff);
 		--_fg: var(--fnk-fg, #0f172a);
 		--_muted: var(--fnk-muted, #64748b);
-		--_border: var(--fnk-border, #cbd5e1);
+		--_border: var(--fnk-border, #7e8ea4);
 		--_divider: var(--fnk-divider, #e2e8f0);
 		--_hover: var(--fnk-hover, #f1f5f9);
 		--_accent: var(--fnk-accent, #2563eb);

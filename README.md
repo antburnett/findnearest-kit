@@ -15,7 +15,7 @@ Shared FindNearest UI for Svelte 5 apps:
 Installed from GitHub at a tag (not published to npm):
 
 ```bash
-bun add github:antburnett/findnearest-kit#v0.2.4
+bun add github:findnearest/findnearest-kit#v0.2.4
 ```
 
 Requires `svelte` 5.20 or later. Upgrading means bumping the tag.
